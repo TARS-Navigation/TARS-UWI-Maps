@@ -1,6 +1,6 @@
 from App.database import db
 from .user import User
-from .user_marker import Marker
+from .marker import Marker
 
 class RegularUser(User):
    id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key = True)

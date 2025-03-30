@@ -1,7 +1,7 @@
 from App.database import db
 from .user import User
 from .room_marker import RoomMarker
-from .user_marker import Marker
+from .marker import Marker
 
 class Admin(User):
     id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key = True)

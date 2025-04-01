@@ -1,0 +1,116 @@
+.login-page-container{
+    z-index: -2;
+    position: absolute;
+    background: 
+    linear-gradient(137deg, rgba(18,190,59,0.4397408621651786) 25%, rgba(180,253,164,0.38371845320159315) 43%, rgba(175,249,168,0.4565475848542542) 65%, rgba(18,190,32,0.24926467168898814) 88%),
+    linear-gradient(152deg, rgba(214,45,45,0) 0%, rgba(255,255,255,1) 50%),
+    url('../images/uwi_image2.jpg') bottom left / cover no-repeat;
+    background-blend-mode: overlay, normal,normal;
+    height: 100vh;
+    width: 100vw;
+}
+
+/*
+    Multiple classes needed for animation 
+    When debugging make changes to the background property or
+    clip path to change shape and angle, also change percentages
+    for gradients for each dynamic image to adjust styles
+
+    The class above is the left image, same properties can be changed
+    to alter it
+
+    If you find new images copy paste the dynamic-image class
+    and increment the number and change the url to that image
+    add all images to the image folder
+*/
+.dynamic-image1{
+    z-index: -1;
+    position:absolute;
+    bottom: 0px;
+    right: 0px;
+    height: 850px;
+    width: 1200px;
+    background: 
+    linear-gradient(137deg, rgba(18,190,59,0.4397408621651786) 25%, rgba(180,253,164,0.38371845320159315) 43%, rgba(175,249,168,0.4565475848542542) 65%, rgba(18,190,32,0.24926467168898814) 88%),
+    linear-gradient(320deg, rgba(243,243,243,0) 0%, rgba(246,246,246,1) 40%, rgba(255,255,255,1) 65%, rgba(255,255,255,0) 100%),
+    url('../images/uwi_image1.jpg') bottom right / contain no-repeat;
+    background-blend-mode: overlay, normal, normal;
+    clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    animation: fadeInOut 6s infinite ease-out;
+}
+
+/*
+    The opacity starts at 0 to begin the animation
+    transition determines how fast opacity changes i think
+    animation fadeInOut is the name of the animation
+    6s is the duration of the animation
+    infinite means it will repeat forever
+    ease-out is the type of animation, it starts fast and slows down
+    at the end, you can change this to ease-in-out or linear or
+    create you own bezier curve for the animation speed
+
+*/
+
+.dynamic-image2{
+    z-index: -1;
+    position:absolute;
+    bottom: 0px;
+    right: 0px;
+    height: 850px;
+    width: 1200px;
+    background: 
+    linear-gradient(137deg, rgba(18,190,59,0.4397408621651786) 25%, rgba(180,253,164,0.38371845320159315) 43%, rgba(175,249,168,0.4565475848542542) 65%, rgba(18,190,32,0.24926467168898814) 88%),
+    linear-gradient(320deg, rgba(243,243,243,0) 0%, rgba(246,246,246,1) 40%, rgba(255,255,255,1) 65%, rgba(255,255,255,0) 100%),
+    url('../images/uwi_image3.jpg') bottom right / contain no-repeat;
+    background-blend-mode: overlay, normal, normal;
+    clip-path: polygon(100% 0, 0% 100%, 100% 100%);
+
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    animation: fadeInOut 6s infinite ease-out;
+}
+
+/*
+    The animation below starts at 0% and ends at 100%
+    at 50% it is fully visible, this is the fade in and out effect
+    the 0% and 100% are the start and end of the animation to make it fade
+*/
+
+/*
+    The clip paths in the dynamic images are used to create the triangle shape
+    the polygon function takes a list of points to create the shape
+    I used the simpler clip path generator to create the shape
+    https://bennettfeely.com/clippy/
+*/
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0; } 
+    50% { opacity: 1; }     
+}
+
+.login-form{
+    z-index: 1;
+    width: 200px;
+    height: 300px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+.login-box-container{
+    z-index: 1;
+    position: relative;
+    margin-left: 31%;
+    margin-top: 8%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height:fit-content;
+    width: fit-content;
+    height:450px;
+    width: 580px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}

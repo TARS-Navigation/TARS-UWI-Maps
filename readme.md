@@ -13,6 +13,7 @@ A template for flask applications structured in the Model View Controller patter
 * Python3/pip3
 * Packages listed in requirements.txt
 * React(bundled inside Flask’s `static/` folder)
+* Leaflet, React-Leaflet
 
 # Installing Dependencies
 ```bash

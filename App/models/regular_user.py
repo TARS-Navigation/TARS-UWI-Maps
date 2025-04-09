@@ -3,8 +3,12 @@ from .user import User
 from .marker import Marker
 
 class RegularUser(User):
+   __tablename__ = 'regular_user'
    id = db.Column(db.Integer, db.ForeignKey('user.id'), primary_key = True)
    markers = db.relationship('Marker', backref='regular_user', lazy = True)
+   __mapper_args__ = {
+      'polymorphic_identity': 'regular user',
+   }
 
    def addUserMarker(self, latitude, longitude, icon):
       marker = Marker(creator_id = self.id, parent_id = None, latitude = latitude, longitude = longitude, icon = icon, globalVisibility = False)

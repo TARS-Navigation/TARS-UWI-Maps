@@ -12,10 +12,19 @@ A template for flask applications structured in the Model View Controller patter
 # Dependencies
 * Python3/pip3
 * Packages listed in requirements.txt
+* React(bundled inside Flask’s `static/` folder)
 
 # Installing Dependencies
 ```bash
 $ pip install -r requirements.txt
+```
+
+# Setting up React Frontend in `static/` folder
+```bash
+cd App/static/frontend
+npm install
+npm run build   # Creates a production build in /build
+cd ../../../  # To go back to Root Folder
 ```
 
 # Configuration Management

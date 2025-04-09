@@ -5,16 +5,15 @@
 {{ super() }}
 
 {% block content %}
-    <h1>Flask MVC</h1>
     {% if is_authenticated %}
         <p> Welcome {{current_user.username}} </p>
     {% endif %}
-    <p>This is a boileplate flask application which follows the MVC pattern for structuring the project.</p>
     <!-- Mount point for React App Component -->
     <div id="react-root"></div>
 {% endblock %}
 {% block scripts %}
     {{ super() }}
     <!-- Load React bundle -->
-    <script src="../static/frontend/build/static/js/main.e3e45060.js"></script>
+    <!-- ="../static/frontend/build/static/js/main.e3e45060.js -->
+    <script src="{{ main_js }}"></script>
  {% endblock %}

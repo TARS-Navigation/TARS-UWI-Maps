@@ -1,0 +1,77 @@
+/* UI CONTAINER STYLES */
+.ui-container{
+    display: grid;
+    grid-template-rows: 8vh 92vh;
+}
+
+/*UI NAVBAR STYLES */
+.ui-header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #3C3D37;
+}
+
+
+.ui-header .buttons-left button{
+    background-color: #3C3D37;
+    border: none;
+    color: white;
+    width: 200px;
+    height: 100%;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.ui-header .buttons-left button:hover{
+    background-color: #697565; 
+}
+
+.ui-header h1{
+    color: white;
+    position: absolute;
+    left: 42%;
+}
+
+.ui-header .buttons-right button{
+    background-color: #3C3D37; 
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.ui-header .buttons-right button:hover{
+    background-color: #481E14; 
+}
+
+/*UI DROPDOWN PANEL STYLES*/
+.ui-dropdown{
+    z-index: 1;
+    opacity: 1;
+
+    position: absolute;
+    top: 8vh;
+    width: 20vw;
+    height: 89.3vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color:#3C3D37;
+    padding: 10px;
+}
+
+/*UI MAP STYLES */
+.ui-map{
+    z-index: 0;   
+}

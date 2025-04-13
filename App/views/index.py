@@ -26,10 +26,13 @@ def index_page():
         manifest = json.load(f)
 
     main_js = manifest["files"]["main.js"]
+    main_css = manifest["files"]["main.css"]
+
     main_js = "../static/frontend/build/"+ main_js
+    main_css = "../static/frontend/build/"+ main_css
     #---------------------------------------------
 
-    return render_template("index.html", main_js=main_js)
+    return render_template("index.html", main_js=main_js, main_css=main_css)
 
 @index_views.route('/init', methods=['GET'])
 def init():

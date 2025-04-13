@@ -1,4 +1,9 @@
 {% extends "layout.html" %}
+{%block head%}
+    <!--Load CSS from the page from React-->
+    <link rel="stylesheet" href="{{ main_css }}">
+{% endblock %}
+
 {% block title %}Flask MVC App{% endblock %}
 {% block page %}Flask MVC App{% endblock %}
 

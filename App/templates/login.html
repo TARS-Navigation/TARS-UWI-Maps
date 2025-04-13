@@ -2,54 +2,89 @@
 
 {% block title %}TARS-Maps Login{% endblock %}
 
-{% block page %}TARS-Maps Login{% endblock %}
-
+{%block page %}TARS-Maps Login{% endblock %}
 
 {% block content %}
+
 <div class="login-page-container">
-    <div id ="dynamic-image" class = "dynamic-image1"></div>
-        <div class = "login-box-container">
+    <div id="dynamic-image" class="dynamic-image1"></div>
+    <div class="login-box-container">
+        
+        <!-- This is to test the login routes -->
+        <form id="loginForm" method="POST" action="/login" style="padding: 1em">
+            <div>Login</div>
+            <div class="input-field col s12">
+                <input
+                    id="username"
+                    name="username"
+                    type="text"
+                    class="validate"
+                    required
+                />
+                <label for="username">Username</label>
+            </div>
+            <div class="input-field col s12">
+                <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    class="validate"
+                    required
+                />
+                <label for="password">Password</label>
+            </div>
+            <button
+                class="btn waves-effect waves-light"
+                type="submit"
+                name="action"
+            >
+                Login
+                <i class="material-icons right">send</i>
+            </button>
+        </form>
 
-            <!-- This is to test the login routes -->
-            <form id = "loginForm" method="POST" action="/login" style="padding:1em">
-                <div >
-                    Login
-                </div>
-                <div class="input-field col s12">
-                    <input id="username" type="text" class="validate" required>
-                    <label for="username">Username</label>
-                </div>
-                <div class="input-field col s12">
-                    <input id="password" type="password" class="validate" required>
-                    <label for="password">Password</label>
-                </div>
-                <button class="btn waves-effect waves-light" type="submit" name="action">Login
-                    <i class="material-icons right">send</i>
-                </button>
-            </form>
+        <!-- This is to test the signup routes -->
+        <form
+            id="signupForm"
+            method="POST"
+            action="/users"
+            style="padding: 1em"
+        >
+            <div>Signup</div>
+            <div class="input-field col s12">
+                <input
+                    id="signup_username"
+                    name="username"
+                    type="text"
+                    class="validate"
+                    required
+                />
+                <label for="signup_username">Username</label>
+            </div>
+            <div class="input-field col s12">
+                <input
+                    id="signup_password"
+                    name="password"
+                    type="password"
+                    class="validate"
+                    required
+                />
+                <label for="signup_password">Password</label>
+            </div>
 
-            <!-- This is to test the signup routes -->
-            <form id="signupForm" method="GET" action="/signup" style="padding:1em">
-                <div >
-                    Signup
-                </div>
-                <div class="input-field col s12">
-                    <input id="username" type="text" class="validate" required>
-                    <label for="username">Username</label>
-                </div>
-                <div class="input-field col s12">
-                    <input id="password" type="password" class="validate" required>
-                    <label for="password">Password</label>
-                </div>
-
-                <button class="btn waves-effect waves-light" type="submit" name="action">Sign Up
-                    <i class="material-icons right">send</i>
-                </button>
-            </form>
-        </div>
+            <button
+                class="btn waves-effect waves-light"
+                type="submit"
+                name="action"
+            >
+                Sign Up
+                <i class="material-icons right">send</i>
+            </button>
+        </form>
+    </div>
 </div>
-{% endblock %}
-{% block scripts %}
+{% endblock %} 
+{% block scripts %} 
     {{ super() }}
     <script src="../static/scripts/login.js"></script>
 {% endblock %}

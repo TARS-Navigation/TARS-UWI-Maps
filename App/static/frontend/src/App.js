@@ -1,33 +1,40 @@
 import React, { useState } from "react";
-import {
-  MapContainer,
-  TileLayer,
-  Marker,
-  Popup,
-  ZoomControl,
-} from "react-leaflet";
+import { MapContainer, TileLayer, ZoomControl } from "react-leaflet";
 import { useMap } from "react-leaflet";
+import Sidebar, { SidebarItem } from "./Components/Sidebar";
+import Header from "./Components/Header";
 
 import "./Styles/map.css";
+import { ReactComponent as MarkerIcon } from "./Icons/marker.svg";
+import { ReactComponent as FilterIcon } from "./Icons/filter.svg";
 
 function App() {
   return (
     <div className="ui-container">
-      <div className="ui-header">
-        <div className="buttons-left">
-          <button id="markers">Markers</button>
-          <button id="filters">Filters</button>
-        </div>
-
-        <h1>TARS-MAPS UWI STA</h1>
-
-        <div className="buttons-right">
-          <button>Logout</button>
-        </div>
-      </div>
-      <div className="ui-dropdown">
-        {}
-      </div>
+      <Header />
+      <Sidebar>
+        <SidebarItem
+          name="Markers"
+          icon={<MarkerIcon />}
+          selections={[
+            "Add Marker",
+            "Remove Marker",
+            "View Markers",
+            "Update Marker",
+          ]}
+        />
+        <SidebarItem
+          name="Filters"
+          icon={<FilterIcon />}
+          selections={[
+            "Add Filter",
+            "Remove Filter",
+            "View Filters",
+            "Update Filter",
+          ]}
+        />
+        <SidebarItem name="Achievements" />
+      </Sidebar>
       <div className="ui-map">
         <MapContainer
           style={{ height: "100%", width: "100%" }}

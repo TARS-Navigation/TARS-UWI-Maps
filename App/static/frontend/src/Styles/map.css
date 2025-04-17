@@ -2,7 +2,7 @@
 .ui-container{
     display: grid;
     grid-template-rows: 8vh 92vh;
-    grid-template-columns: 16% 84%;
+    grid-template-columns: 20% 80%;
 }
 
 /*UI MAP STYLES */

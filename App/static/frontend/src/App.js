@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { MapContainer, TileLayer, ZoomControl } from "react-leaflet";
 import { useMap } from "react-leaflet";
-import Sidebar, { SidebarItem } from "./Components/Sidebar";
+import { Sidebar, SidebarItem } from "./Components/Sidebar";
 import Header from "./Components/Header";
 
 import "./Styles/map.css";
@@ -9,13 +9,16 @@ import { ReactComponent as MarkerIcon } from "./Icons/marker.svg";
 import { ReactComponent as FilterIcon } from "./Icons/filter.svg";
 
 function App() {
+  const [activeOption, setActiveOption] = useState(null);
+
   return (
     <div className="ui-container">
       <Header />
-      <Sidebar>
+      <Sidebar activeOption={activeOption} changeActiveOption={setActiveOption}>
         <SidebarItem
           name="Markers"
           icon={<MarkerIcon />}
+          changeActiveOption={setActiveOption}
           selections={[
             "Add Marker",
             "Remove Marker",
@@ -29,7 +32,7 @@ function App() {
           selections={[
             "Add Filter",
             "Remove Filter",
-            "View Filters",
+            "Toggle Filters",
             "Update Filter",
           ]}
         />

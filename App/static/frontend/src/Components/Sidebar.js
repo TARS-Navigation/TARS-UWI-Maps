@@ -16,6 +16,7 @@ export function Sidebar(props) {
     RemoveMarker: RemoveMarker,
     ViewMarkers: ViewMarkers,
     UpdateMarker: UpdateMarker,
+    null: () => <div></div>,
   };
 
   return (
@@ -44,7 +45,7 @@ export function Sidebar(props) {
           ? React.createElement(componentMap[props.activeOption], {
               changeActiveOption: props.changeActiveOption,
             })
-          : React.createElement(componentMap[prevOption], {changeActiveOption: props.changeActiveOption})}
+          : React.createElement(componentMap[prevOption], {changeActiveOption: () => {}})}
       </div>
     </div>
   );

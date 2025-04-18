@@ -11,8 +11,8 @@ class Admin(User):
       'polymorphic_identity': 'admin',
     }
 
-    def addBuildingMarker(self, latitude, longitude, icon):
-        buildingMarker = Marker(creator_id = self.id, parent_id = None, latitude = latitude, longitude = longitude, icon = icon, globalVisibility = True)
+    def addBuildingMarker(self, latitude, longitude, icon, category):
+        buildingMarker = Marker(creator_id = self.id, parent_id = None, latitude = latitude, longitude = longitude, icon = icon, globalVisibility = True, category=category)
         db.session.add(buildingMarker)
         db.session.commit()
         return buildingMarker

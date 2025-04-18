@@ -30,5 +30,5 @@ def achievements_page():
 
             })
 
-    return render_template('achievements.html', allAchievements = data)
+    return render_template('achievements.html', allAchievements = data,  current_user=user )
 

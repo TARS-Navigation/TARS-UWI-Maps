@@ -43,9 +43,21 @@ export function Sidebar(props) {
         </button>
         {props.activeOption != null
           ? React.createElement(componentMap[props.activeOption], {
-              changeActiveOption: props.changeActiveOption,
+              setMarkerDetails: props.setMarkerDetails,
+              markers: props.markers,
+              setMarkers: props.setMarkers,
+              selectedMarker: props.selectedMarker,
+              setSelectedMarker: props.setSelectedMarker,
+              setIsPlacingMarker: props.setIsPlacingMarker
             })
-          : React.createElement(componentMap[prevOption], {changeActiveOption: () => {}})}
+          : React.createElement(componentMap[prevOption], {
+              setMarkerDetails: props.setMarkerDetails,
+              markers: props.markers,
+              setMarkers: props.setMarkers,
+              selectedMarker: props.selectedMarker,
+              setSelectedMarker: props.setSelectedMarker,
+              setIsPlacingMarker: props.setIsPlacingMarker
+            })}
       </div>
     </div>
   );

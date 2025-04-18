@@ -20,6 +20,8 @@ function ClickCoordinatesHandler({ onClick }) {
 }
 
 function App() {
+  //The overall map state is managed here.
+  //Pass any new state to the sidebar as needed for new components.
   const [markers, setMarkers] = useState([]);
   const [markerDetails, setMarkerDetails] = useState({
     name: "",
@@ -47,6 +49,7 @@ function App() {
     <div className="ui-container">
       <Header />
       <Sidebar
+        //Pass in state as props here
         markers={markers}
         setMarkers={setMarkers}
         selectedMarker={selectedMarker}
@@ -60,6 +63,7 @@ function App() {
           name="Markers"
           icon={<MarkerIcon />}
           changeActiveOption={setActiveOption}
+          //These are the dropdown options for the markers sidebar item.
           selections={[
             "Add Marker",
             "Remove Marker",
@@ -71,15 +75,21 @@ function App() {
           name="Filters"
           icon={<FilterIcon />}
           changeActiveOption={setActiveOption}
+          //These are the dropdown options for the filters sidebar item.
+          //Some of these may be changed such as Remove Filter and Update Filter being 
+          //merged into one option called "Manage Filters"
+          //*I reduced it to just Edit Filters and Toggle Filters for now.*
+          //You can change it back to Add, Remove and Update Filters if you want
+          //and remove the Edit Filters option.
           selections={[
-            "Add Filter",
-            "Remove Filter",
+            "Edit Filters",
             "Toggle Filters",
-            "Update Filter",
           ]}
         />
         <SidebarItem name="Achievements" />
       </Sidebar>
+
+      {/*This is the main map container.*/}
       <div className="ui-map">
         <MapContainer
           id="map"
@@ -102,6 +112,7 @@ function App() {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
+          {/*This is the code for adding markers to the map from the markers state*/}
           {markers.map((marker) => (
             <Marker
               id={marker.id}
@@ -131,6 +142,13 @@ function App() {
             </Marker>
           ))}
           <ZoomControl position="topright" />
+          {
+          /*
+          This is the code for placing markers on the map
+          Its functionality is handled in the ClickCoordinatesHandler component found higher up in the file.
+          It uses the useMapEvents hook from react-leaflet to get the lat and lng of the click event.
+          */
+          }
           <ClickCoordinatesHandler
             onClick={({ lat, lng }) => {
               if (isPlacingMarker) {

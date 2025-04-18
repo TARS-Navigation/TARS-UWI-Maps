@@ -2,6 +2,14 @@ import React, {useState, useEffect} from "react";
 
 import "../Styles/marker_options.css";
 
+//DONT EDIT THIS FILE UNLESS YOU FULLY UNDERSTAND IT
+//This file contains the components that are used to add, remove, view, and update markers on the map.
+//The components are used in the sidebar and are passed props from the sidebar to manage the state of the markers.
+
+//NOTE FOR WHEN STYLING:
+//You can change the style of the html parts for the form
+//BUT DONT REMOVE THE EXISTING HTML ELEMENTS OR THE FUNCTIONALITY WILL BREAK
+
 export function AddMarker(props) {
   const addMarker = (e) => {
     e.preventDefault();

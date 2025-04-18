@@ -1,116 +1,271 @@
-.login-page-container{
-    z-index: -2;
-    position: absolute;
-    background: 
-    linear-gradient(137deg, rgba(18,190,59,0.4397408621651786) 25%, rgba(180,253,164,0.38371845320159315) 43%, rgba(175,249,168,0.4565475848542542) 65%, rgba(18,190,32,0.24926467168898814) 88%),
-    linear-gradient(152deg, rgba(214,45,45,0) 0%, rgba(255,255,255,1) 50%),
-    url('../images/uwi_image2.jpg') bottom left / cover no-repeat;
-    background-blend-mode: overlay, normal,normal;
+* {
+    box-sizing: border-box;
+  }
+  
+  body {
+    background: transparent;
+    font-family: 'Segoe UI', sans-serif;
     height: 100vh;
-    width: 100vw;
-}
-
-/*
-    Multiple classes needed for animation 
-    When debugging make changes to the background property or
-    clip path to change shape and angle, also change percentages
-    for gradients for each dynamic image to adjust styles
-
-    The class above is the left image, same properties can be changed
-    to alter it
-
-    If you find new images copy paste the dynamic-image class
-    and increment the number and change the url to that image
-    add all images to the image folder
-*/
-.dynamic-image1{
-    z-index: -1;
-    position:absolute;
-    bottom: 0px;
-    right: 0px;
-    height: 850px;
-    width: 1200px;
-    background: 
-    linear-gradient(137deg, rgba(18,190,59,0.4397408621651786) 25%, rgba(180,253,164,0.38371845320159315) 43%, rgba(175,249,168,0.4565475848542542) 65%, rgba(18,190,32,0.24926467168898814) 88%),
-    linear-gradient(320deg, rgba(243,243,243,0) 0%, rgba(246,246,246,1) 40%, rgba(255,255,255,1) 65%, rgba(255,255,255,0) 100%),
-    url('../images/uwi_image1.jpg') bottom right / contain no-repeat;
-    background-blend-mode: overlay, normal, normal;
-    clip-path: polygon(100% 0, 0% 100%, 100% 100%);
-
-    opacity: 0;
-    transition: opacity 0.2s ease-in-out;
-    animation: fadeInOut 6s infinite ease-out;
-}
-
-/*
-    The opacity starts at 0 to begin the animation
-    transition determines how fast opacity changes i think
-    animation fadeInOut is the name of the animation
-    6s is the duration of the animation
-    infinite means it will repeat forever
-    ease-out is the type of animation, it starts fast and slows down
-    at the end, you can change this to ease-in-out or linear or
-    create you own bezier curve for the animation speed
-
-*/
-
-.dynamic-image2{
-    z-index: -1;
-    position:absolute;
-    bottom: 0px;
-    right: 0px;
-    height: 850px;
-    width: 1200px;
-    background: 
-    linear-gradient(137deg, rgba(18,190,59,0.4397408621651786) 25%, rgba(180,253,164,0.38371845320159315) 43%, rgba(175,249,168,0.4565475848542542) 65%, rgba(18,190,32,0.24926467168898814) 88%),
-    linear-gradient(320deg, rgba(243,243,243,0) 0%, rgba(246,246,246,1) 40%, rgba(255,255,255,1) 65%, rgba(255,255,255,0) 100%),
-    url('../images/uwi_image3.jpg') bottom right / contain no-repeat;
-    background-blend-mode: overlay, normal, normal;
-    clip-path: polygon(100% 0, 0% 100%, 100% 100%);
-
-    opacity: 0;
-    transition: opacity 0.2s ease-in-out;
-    animation: fadeInOut 6s infinite ease-out;
-}
-
-/*
-    The animation below starts at 0% and ends at 100%
-    at 50% it is fully visible, this is the fade in and out effect
-    the 0% and 100% are the start and end of the animation to make it fade
-*/
-
-/*
-    The clip paths in the dynamic images are used to create the triangle shape
-    the polygon function takes a list of points to create the shape
-    I used the simpler clip path generator to create the shape
-    https://bennettfeely.com/clippy/
-*/
-
-@keyframes fadeInOut {
-    0%, 100% { opacity: 0; } 
-    50% { opacity: 1; }     
-}
-
-.login-form{
-    z-index: 1;
-    width: 200px;
-    height: 300px;
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
-}
-
-.login-box-container{
-    z-index: 1;
-    position: relative;
-    margin-left: 31%;
-    margin-top: 8%;
     display: flex;
-    flex-direction: row;
     justify-content: center;
     align-items: center;
-    height:fit-content;
-    width: fit-content;
-    height:450px;
-    width: 580px;
-    background-color: white;
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-}
+    margin: 0;
+    color: #fff;
+  }
+  
+  form {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(6px);
+    text-align: center;
+    width: 80%;
+    max-width: 350px;
+    animation: fadeIn 0.6s ease;
+    padding: 6rem 4rem;
+  }
+
+  h1 {
+    font-family: fantasy;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.98);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+  
+  input {
+    background-color: #1d1919;
+    border: 1px solid #030e0e;
+    padding: 14px 20px;
+    border-radius: 30px;
+    margin: 10px 0;
+    width: 100%;
+    font-size: 1rem;
+    transition: box-shadow 0.3s ease;
+  }
+  
+  input:focus {
+    outline: none;
+    box-shadow: 0 0 8px rgba(82, 201, 179, 0.4);
+  }
+  
+  button {
+    background-color: #52c9b3;
+    color: white;
+    border: none;
+    padding: 12px 36px;
+    border-radius: 30px;
+    font-size: 0.95rem;
+    letter-spacing: 1px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(82, 201, 179, 0.4);
+  }
+  
+  button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(82, 201, 179, 0.6);
+  }
+  
+  button.ghost {
+    background-color: #52beab;
+    color: white;
+    border: 2px solid #52c9b3;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+  
+  button.ghost:hover {
+    background-color: #135a4d;
+    color: white;
+  }
+
+  .container {
+    background: linear-gradient(to right, rgba(75, 118, 211, 0.877), rgba(118, 233, 185, 0.9));
+    border-radius: 10px;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 
+                0 10px 10px rgba(0, 0, 0, 0.22);
+    position: relative;
+    overflow: hidden;
+    width: 850px;
+    max-width: 100%;
+    min-height: 500px;
+  }
+  
+  .form-container {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    transition: all 0.6s ease-in-out;
+    pointer-events: none;
+    opacity: 0;
+    visibility: hidden;
+    padding: 0 20px;
+  }
+  
+  .sign-in-container {
+    left: 0;
+  }
+  
+  .sign-up-container {
+    left: 0;
+  }
+  
+  .container.right-panel-active .sign-in-container {
+    transform: translateX(100%);
+  }
+  
+  .container.right-panel-active .sign-up-container {
+    transform: translateX(100%);
+  }
+  
+  .container:not(.right-panel-active) .sign-in-container {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  
+  .container.right-panel-active .sign-up-container {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  
+  .overlay-container {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    transition: transform 0.6s ease-in-out;
+    z-index: 100;
+  }
+  
+  .container.right-panel-active .overlay-container {
+    transform: translateX(-100%);
+  }
+  
+  .overlay {
+    background: url('../images/tree2.gif');;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #fff;
+    position: relative;
+    left: -100%;
+    height: 100%;
+    width: 200%;
+    transform: translateX(0);
+    transition: transform 0.6s ease-in-out;
+    font-weight: 700;
+  }
+  
+  .container.right-panel-active .overlay {
+    transform: translateX(50%);
+  }
+  
+  .overlay-panel {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0 40px;
+    text-align: center;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    transform: translateX(0);
+    transition: transform 0.6s ease-in-out;
+  }
+  
+  .overlay-left { 
+    transform: translateX(-20%);
+    left: 0;
+  }
+  
+  .container.right-panel-active .overlay-left {
+    transform: translateX(0);
+  }
+  
+  .overlay-right {
+    right: 0;
+    transform: translateX(0);
+  }
+  
+  .container.right-panel-active .overlay-right {
+    transform: translateX(20%);
+  }
+  
+  .ghost {
+    background-color: transparent;
+    border: 1px solid #fff;
+  }
+  
+  .background-rotator {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: -2;
+    overflow: hidden;
+  }
+  
+  .background-rotator::after {
+    content: "";
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 1;
+  }
+  
+  .bg-slide {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    animation: fadeSlideshow 15s infinite ease-in-out;
+    filter: blur(5px) brightness(0.7) saturate(0.8);
+    transform: scale(1.05);
+  }
+  
+  .bg1 {
+    background-image: url('../images/uwi_image1.jpg');
+    animation-delay: 0s;
+  }
+  
+  .bg2 {
+    background-image: url('../images/uwi_image2.jpg');
+    animation-delay: 5s;
+  }
+  
+  .bg3 {
+    background-image: url('../images/uwi_image3.jpg');
+    animation-delay: 10s;
+  }
+  
+  @keyframes fadeSlideshow {
+    0% { opacity: 0; }
+    10% { opacity: 1; }
+    30% { opacity: 1; }
+    40% { opacity: 0; }
+    100% { opacity: 0; }
+  }

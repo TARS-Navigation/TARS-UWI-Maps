@@ -8,6 +8,7 @@ class Marker(db.Model):
     longitude = db.Column(db.Float, nullable = False, unique = False)
     icon = db.Column(db.String(200), nullable = False)
     globalVisibility = db.Column(db.Boolean, nullable = False, default = False)
+    category = db.Column(db.String(50), nullable=False)
 
     def __init__(self, creator_id, parent_id, latitude, longitude, icon, globalVisibility
 ):

@@ -1,17 +1,12 @@
+// This file contains the JavaScript code for the login and sign-up form functionality.
+
 document.addEventListener("DOMContentLoaded", () => {
-    const dynamicImage = document.getElementById("dynamic-image");
-    const classes = ["dynamic-image1", "dynamic-image2"];
-    let currentIndex = 0;
-
-    dynamicImage.addEventListener("animationiteration", () => { 
-        console.log(classes[currentIndex]);
-
-        dynamicImage.classList.remove(classes[currentIndex]);
-
-        currentIndex = (currentIndex + 1) % classes.length;
-        
-        dynamicImage.classList.add(classes[currentIndex]);
-
+    const container = document.getElementById("container");
+    document.getElementById("signUp").addEventListener("click", () => {
+      container.classList.add("right-panel-active");
     });
-
-});
+  
+    document.getElementById("signIn").addEventListener("click", () => {
+      container.classList.remove("right-panel-active");
+    });
+  });

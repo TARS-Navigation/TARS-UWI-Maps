@@ -5,17 +5,23 @@ import {
   ViewMarkers,
   UpdateMarker,
 } from "./MarkerOptions";
+import { EditFilter, ToggleFilter } from "./FilterOptions";
 
 import "../Styles/sidebar.css";
 
 export function Sidebar(props) {
   const [prevOption, setPrevOption] = useState(null);
 
+  //This is the map of components that will be rendered in the sidebar.
+  //The keys are the names of the components, and the values are the components themselves.
+  //For any new component, add it to this map and create a new entry in the sidebar.
   const componentMap = {
     AddMarker: AddMarker,
     RemoveMarker: RemoveMarker,
     ViewMarkers: ViewMarkers,
     UpdateMarker: UpdateMarker,
+    ToggleFilters: ToggleFilter,
+    EditFilters: EditFilter,
     null: () => <div></div>,
   };
 
@@ -41,8 +47,15 @@ export function Sidebar(props) {
         >
           back
         </button>
+        { /* 
+          This is where the dropdown option's component will be rendered, so the form for the 'Add Marker' 
+          component will be rendered here and is dynamically created based on the active option.
+          If you are adding a new component that needs props be sure to add them to the props arguemen
+          in the React.createElement function call below.
+        */}
         {props.activeOption != null
           ? React.createElement(componentMap[props.activeOption], {
+            //Pass in the props that are needed for the component here.
               setMarkerDetails: props.setMarkerDetails,
               markers: props.markers,
               setMarkers: props.setMarkers,
@@ -51,6 +64,7 @@ export function Sidebar(props) {
               setIsPlacingMarker: props.setIsPlacingMarker
             })
           : React.createElement(componentMap[prevOption], {
+            //Pass in the SAME props that are needed for the component here ALSO else code will break.
               setMarkerDetails: props.setMarkerDetails,
               markers: props.markers,
               setMarkers: props.setMarkers,
@@ -75,6 +89,7 @@ export function SidebarItem(props) {
           setIsOpen(!isOpen);
         }}
       >
+        {/*Achievements does not have an arrow so I do a check to render it correctly */}
         {props.name !== "Achievements" ? (
           <div className="sidebar-button-content">
             <div className="sidebar-icon">{props.icon}</div>
@@ -86,6 +101,10 @@ export function SidebarItem(props) {
         )}
       </button>
 
+      {/*This is the dropdown menu that will be rendered when the button is clicked.*/}
+      {/*I do a check to see if the name is not achievements, because achievements does not have a dropdown.*/}
+      {/*The dropdown will be open if the isOpen state is true.*/}
+      {/*The selections are passed in as props and are mapped to create the list items.*/}
       {props.name !== "Achievements" ? (
         <div
           className={`sidebar-dropdown ${

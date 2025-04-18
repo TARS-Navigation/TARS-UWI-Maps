@@ -5,3 +5,5 @@ from .filter import *
 from .admin_marker import *
 from .room_marker import *
 from .marker import *
+from .filter import *
+from .FilterCategory import *

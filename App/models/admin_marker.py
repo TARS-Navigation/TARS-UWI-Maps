@@ -6,6 +6,7 @@ class AdminMarker(db.Model):
     latitude = db.Column(db.Float, nullable = False)
     longitude = db.Column(db.Float, nullable = False)
     icon = db.Column(db.String, nullable = False)
+    category = db.Column(db.String(50), nullable=False)
 
     def __init__(self, latitude, longitude, icon):
         self.latitude = latitude

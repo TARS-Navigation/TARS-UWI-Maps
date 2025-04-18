@@ -10,8 +10,8 @@ class RegularUser(User):
       'polymorphic_identity': 'regular user',
    }
 
-   def addUserMarker(self, latitude, longitude, icon):
-      marker = Marker(creator_id = self.id, parent_id = None, latitude = latitude, longitude = longitude, icon = icon, globalVisibility = False)
+   def addUserMarker(self, latitude, longitude, icon, category):
+      marker = Marker(creator_id = self.id, parent_id = None, latitude = latitude, longitude = longitude, icon = icon, globalVisibility = False, category=category)
       db.session.add(marker)
       db.session.commit()
       return marker

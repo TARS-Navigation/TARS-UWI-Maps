@@ -10,14 +10,14 @@ class Marker(db.Model):
     globalVisibility = db.Column(db.Boolean, nullable = False, default = False)
     category = db.Column(db.String(50), nullable=False)
 
-    def __init__(self, creator_id, parent_id, latitude, longitude, icon, globalVisibility
-):
+    def __init__(self, creator_id, parent_id, latitude, longitude, icon, globalVisibility, category):
         self.creator_id = creator_id
         self.parent_id = parent_id
         self.latitude = latitude
         self.longitude = longitude
         self.icon = icon
         self.globalVisibility = globalVisibility
+        self.category = category
 
     def get_json(self):
         return {
@@ -27,10 +27,10 @@ class Marker(db.Model):
         'latitude': self.latitude,
         'longitude': self.longitude,
         'icon': self.icon,
-        'globalVisibility': self.globalVisibility
+        'globalVisibility': self.globalVisibility,
+        'category': self.category
     }
-        
+
     def getChildMarkers(self):
          child_markers = Marker.query.filter_by(parent_id=self.id).all()
          return [marker.get_json() for marker in child_markers]
-

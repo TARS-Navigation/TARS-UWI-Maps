@@ -1,6 +1,5 @@
 from flask import Blueprint, render_template, jsonify, request, flash, send_from_directory, flash, redirect, url_for
 from flask_jwt_extended import jwt_required, current_user, unset_jwt_cookies, set_access_cookies
-from App.models import Admin
 from App.controllers import get_user_by_username,create_user,get_all_users
 
 from .index import index_views

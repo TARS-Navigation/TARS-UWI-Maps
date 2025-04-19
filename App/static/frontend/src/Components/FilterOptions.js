@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 
 import "../Styles/filter_options.css";
 
@@ -9,14 +9,37 @@ import "../Styles/filter_options.css";
 
 //The toggle filter component would be where you set the active filters
 export function EditFilter(props) {
-    return(
-        <div></div>
-    )
+  return <div></div>;
 }
 
 export function ToggleFilter(props) {
-    return(
-        <div></div>
-    )
-}
+  const handleFilterChange = (e) => {
+    const {value, checked } = e.target;
 
+    props.setActiveFilters((prev) =>
+      checked
+        ? [...prev, value] 
+        : prev.filter((v) => v !== value) 
+    );
+  };
+
+  return (
+    <div>
+      <ul className="filter-list">
+        {props.filters.map((filter) => (
+          <li key={filter} className="filter-item">
+            <label>
+              <input
+                type="checkbox"
+                value={filter}
+                checked={props.activeFilters.includes(filter)}
+                onChange={handleFilterChange}
+              />
+              {filter}
+            </label>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}

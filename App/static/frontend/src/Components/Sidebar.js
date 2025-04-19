@@ -61,7 +61,11 @@ export function Sidebar(props) {
               setMarkers: props.setMarkers,
               selectedMarker: props.selectedMarker,
               setSelectedMarker: props.setSelectedMarker,
-              setIsPlacingMarker: props.setIsPlacingMarker
+              setIsPlacingMarker: props.setIsPlacingMarker,
+              filters : props.filters,
+              setFilters : props.setFilters,
+              activeFilters : props.activeFilters,
+              setActiveFilters : props.setActiveFilters
             })
           : React.createElement(componentMap[prevOption], {
             //Pass in the SAME props that are needed for the component here ALSO else code will break.
@@ -70,7 +74,11 @@ export function Sidebar(props) {
               setMarkers: props.setMarkers,
               selectedMarker: props.selectedMarker,
               setSelectedMarker: props.setSelectedMarker,
-              setIsPlacingMarker: props.setIsPlacingMarker
+              setIsPlacingMarker: props.setIsPlacingMarker,
+              filters : props.filters,
+              setFilters : props.setFilters,
+              activeFilters : props.activeFilters,
+              setActiveFilters : props.setActiveFilters
             })}
       </div>
     </div>

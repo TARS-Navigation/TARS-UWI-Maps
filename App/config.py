@@ -1,8 +1,8 @@
 import os
 
 def load_config(app, overrides):
-    if os.path.exists(os.path.join('./App', 'custom_config.py')):
-        app.config.from_object('App.custom_config')
+    if os.path.exists(os.path.join('./App', 'default_config.py')):
+        app.config.from_object('App.default_config')
     else:
         app.config.from_object('App.default_config')
     app.config.from_prefixed_env()

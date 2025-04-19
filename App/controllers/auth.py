@@ -4,7 +4,7 @@ from App.models import User, Admin
 def login(username, password):
     user = User.query.filter_by(username=username).first()
     if user and user.check_password(password):
-        return create_access_token(identity=username)
+        return create_access_token(identity=str(user.id))
     return None
 
 def setup_jwt(app):
@@ -12,9 +12,9 @@ def setup_jwt(app):
 
     @jwt.user_identity_loader
     def user_identity_lookup(identity):
-        user = User.query.filter_by(username=identity).one_or_none()
+        user = User.query.filter_by(id=identity).one_or_none()
         if user:
-            return user.id
+            return str(user.id) #for this ver have to return str(user.id)
         return None
 
     @jwt.user_lookup_loader

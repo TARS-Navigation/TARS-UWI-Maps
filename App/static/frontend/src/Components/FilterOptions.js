@@ -12,6 +12,18 @@ export function EditFilter(props) {
   return <div></div>;
 }
 
+export function AddCustomFilter(props) {
+  return (
+    <div className="filter-placeholder">
+      <h2>Add Custom Filter</h2>
+      <p>Need to implement logic where we add markers to filters. </p>
+       <p>  There will be a dropdown of all markers here.</p>
+       <p>  Then add it to toggle filters list</p>
+    </div>
+  );
+}
+
+
 export function ToggleFilter(props) {
   const handleFilterChange = (e) => {
     const {value, checked } = e.target;
@@ -22,6 +34,7 @@ export function ToggleFilter(props) {
         : prev.filter((v) => v !== value) 
     );
   };
+
 
   return (
     <div>

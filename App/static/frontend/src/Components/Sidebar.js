@@ -69,7 +69,9 @@ export function Sidebar(props) {
               setActiveFilters : props.setActiveFilters,
               setSelectedCategory: props.setSelectedCategory,      
               setCustomCategory: props.setCustomCategory,          
-              customCategory: props.customCategory     
+              customCategory: props.customCategory,
+              customFilterMap : props.customFilterMap,
+              setCustomFilterMap: props.setCustomFilterMap,     
             })
           : React.createElement(componentMap[prevOption], {
             //Pass in the SAME props that are needed for the component here ALSO else code will break.
@@ -85,7 +87,9 @@ export function Sidebar(props) {
               setActiveFilters : props.setActiveFilters,
               setSelectedCategory: props.setSelectedCategory,      
               setCustomCategory: props.setCustomCategory,          
-              customCategory: props.customCategory     
+              customCategory: props.customCategory,
+              customFilterMap : props.customFilterMap,
+              setCustomFilterMap: props.setCustomFilterMap,
             })}
       </div>
     </div>

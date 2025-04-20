@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 
 import "../Styles/marker_options.css";
 
@@ -18,10 +18,12 @@ export function AddMarker(props) {
     const formData = new FormData(e.target);
     const markerName = formData.get("marker-name");
     const markerDescription = formData.get("marker-description");
+    const markerCategory = formData.get("marker-category");
 
     props.setMarkerDetails({
       name: markerName,
       description: markerDescription,
+      categories: [markerCategory]
     });
   };
 
@@ -38,6 +40,12 @@ export function AddMarker(props) {
           name="marker-description"
           required
         ></textarea>
+        <label htmlFor="marker-categories">Marker Category:</label>
+        <select name="marker-category" id="marker-category">
+          {props.filters.map((filter) => (
+            <option value={filter}> {filter}</option>
+          ))}
+        </select>
         <button type="submit">Add Marker</button>
       </form>
     </div>
@@ -59,10 +67,12 @@ export function RemoveMarker(props) {
       <div className="marker-remove">
         <h2>Remove Marker</h2>
         <p>Click on the marker you want to remove.</p>
+        <h2>Selected Marker: </h2>
         {props.selectedMarker && (
           <div className="marker-details">
             <h3>{props.selectedMarker.name}</h3>
             <p>{props.selectedMarker.description}</p>
+            <p>{props.selectedMarker.categories}</p>
           </div>
         )}
         <button onClick={removeMarker}>Remove Marker</button>
@@ -80,6 +90,7 @@ export function ViewMarkers(props) {
             <li key={index} className="marker-item">
               <h3>{marker.name}</h3>
               <p>{marker.description}</p>
+              <p>{marker.categories}</p>
             </li>
           ))}
         </ul>
@@ -102,7 +113,6 @@ export function UpdateMarker(props) {
       });
     }
   }, [props.selectedMarker]);
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -158,6 +168,7 @@ export function UpdateMarker(props) {
             onChange={handleChange}
             required
           ></textarea>
+
           <button type="submit">Update Marker</button>
         </form>
       )}

@@ -47,6 +47,7 @@ function App() {
     "Recreation",
   ];
 
+  const [customFilterMap, setCustomFilterMap] = useState({});
   const [filters, setFilters] = useState([...baseFilters]);
 
   const [activeFilters, setActiveFilters] = useState([]);
@@ -101,7 +102,43 @@ function App() {
       );
       setFilteredMarkers(filtered);
     }
-  }, [activeFilters, markers]);
+  
+    const visibleMarkerIds = new Set();
+
+
+
+    console.log(" Active Filters:", activeFilters);
+
+    
+    console.log(" Custom Filter Map:", customFilterMap);
+  
+    
+    console.log(" All Markers:", markers);
+  
+
+
+  
+    // Loop through all markers
+    markers.forEach((marker) => {
+      // If this marker has a category that is toggled on
+      if (marker.categories.some((cat) => activeFilters.includes(cat))) {
+        visibleMarkerIds.add(marker.id);
+      }
+  
+      // Check custom filters
+      activeFilters.forEach((filter) => {
+        if (customFilterMap[filter]?.includes(marker.id)) {
+          visibleMarkerIds.add(marker.id);
+        }
+      });
+    });
+
+
+    console.log(" Filtered Marker IDs:", [...visibleMarkerIds]);
+  
+    // Final filtered markers
+    setFilteredMarkers(markers.filter((m) => visibleMarkerIds.has(m.id)));
+  }, [activeFilters, markers, customFilterMap]);
 
   const AddNewMarker = async (finalCategory, lattitude, longitude) => {
     try {
@@ -197,6 +234,8 @@ function App() {
         setSelectedCategory={setSelectedCategory}
         customCategory={customCategory}
         setCustomCategory={setCustomCategory}
+        customFilterMap = {customFilterMap}
+        setCustomFilterMap = {setCustomFilterMap}
       >
         <SidebarItem
           name="Markers"
@@ -294,5 +333,7 @@ function App() {
     </div>
   );
 }
+
+
 
 export default App;

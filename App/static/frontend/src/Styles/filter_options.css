@@ -5,3 +5,12 @@
 .filter-item:hover{
     cursor: pointer;
 }
+
+.filter-form{
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-form label{
+    margin-top:0.5rem;
+}

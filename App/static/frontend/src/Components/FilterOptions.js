@@ -13,14 +13,69 @@ export function EditFilter(props) {
 }
 
 export function AddCustomFilter(props) {
-  return (
-    <div className="filter-placeholder">
-      <h2>Add Custom Filter</h2>
-      <p>Need to implement logic where we add markers to filters. </p>
-       <p>  There will be a dropdown of all markers here.</p>
-       <p>  Then add it to toggle filters list</p>
+  const [title, setTitle ] = useState("");
+  const [selectedMarkerIds, setSelectedMarkerIds ] = useState([]);
+
+  const handleMarkerToggle  = (id) => {
+    setSelectedMarkerIds((prev) =>
+      prev.includes(id)
+      ? prev.filter((mId) => mId !== id)
+      : [...prev, id]
+    );
+  };
+
+  const handleSave = () => {
+    if(!title.trim()) 
+      return
+
+    if(!props.filters.includes(title)){
+      props.setFilters((prev) => [...prev, title]);
+    }
+
+    if(props.setCustomFilterMap){
+      props.setCustomFilterMap((prev) => ({
+        ...prev,
+        [title]: selectedMarkerIds,
+      }));
+    }
+
+    setTitle("");
+    setSelectedMarkerIds([]);
+  };
+
+  return(
+    <div className ="filter-form">
+      <h2>Create Custom Filter</h2>
+      <label> Custom Filter Title: </label>
+      <input
+      type = "text" 
+      value = {title}
+      onChange = {(e) => setTitle(e.target.value)}
+      placeholder = "eg. Best UWI spots to play fours"
+      />
+
+      <label>Select Markers you want: </label>
+      <ul>
+        {props.markers.map((marker) => (
+          <li key={marker.id}>
+            <label>
+              <input 
+              type = "checkbox"
+              checked = {selectedMarkerIds.includes(marker.id)}
+              onChange = {() => handleMarkerToggle(marker.id)}
+              />
+              {marker.name}
+            </label>
+          </li>
+        ))}
+      </ul>
+
+      <button onClick = {handleSave}> Save Filter</button>
+
     </div>
-  );
+  )
+
+
 }
 
 

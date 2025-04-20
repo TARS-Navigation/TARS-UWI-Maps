@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, jsonify, request, flash, send_from_directory, flash, redirect, url_for
 from flask_jwt_extended import jwt_required, current_user, unset_jwt_cookies, set_access_cookies
-from App.models import Admin
-from App.controllers import get_user_by_username
+from App.controllers import get_user_by_username,create_user,get_all_users
 
 from .index import index_views
 
@@ -13,8 +12,9 @@ Page/Action Routes
 '''
 
 
-@auth_views.route('/users', methods=['GET', 'POST'])
+@auth_views.route('/register', methods=['GET', 'POST'])
 def user_page():
+
     if request.method == 'POST':
         data = request.form
         if not data['username'] or not data['password']:
@@ -24,12 +24,20 @@ def user_page():
         user = get_user_by_username(data['username'])
         if user:
             flash('Username already exists')
-            return redirect(url_for('index_views.index_page')), 400
+            return jsonify({'success': False, 'message': 'User Already exists'}), 422
 
         user = create_user(data['username'], data['password'])
         if user:
-            flash('User created successfully!')
-            return redirect(url_for('auth_views.login_action'))
+            token = login(data['username'], data['password'])
+            response_data = {
+                'success': True,
+                'message': 'Registration successful',
+                'user': user.username
+            }
+
+            response = jsonify(response_data)
+            set_access_cookies(response, token)
+            return response
         return redirect(url_for('index_views.index_page')), 400
 
     users = get_all_users()
@@ -50,27 +58,26 @@ def identify_page():
 def login_action():
     data = request.form
     token = login(data['username'], data['password'])
+
     if not token:
-        flash('Bad username or password given')
-        return redirect(url_for('index_views.index_page')), 401
+        return jsonify({'success': False, 'message': 'Bad username or password'}), 401
 
     user = get_user_by_username(data['username'])
-    flash('Login Successful')
-    response = None
 
-    if isinstance(user, Admin):
-        response = redirect(url_for('admin.index'))
-    else:
-        response = redirect(url_for('index_views.index_page'))
+    response_data = {
+        'success': True,
+        'message': 'Login successful',
+        'user': user.username
+    }
 
+    response = jsonify(response_data)
     set_access_cookies(response, token)
     return response
 
-
 @auth_views.route('/logout', methods=['GET'])
+@jwt_required()
 def logout_action():
-    response = redirect(request.referrer)
-    flash("Logged Out!")
+    response = jsonify({"msg": "Logout successful"})
     unset_jwt_cookies(response)
     return response
 

@@ -1,8 +1,10 @@
 from App.database import db
-class FilterCategory(db.Model):
+class MarkerFilter(db.Model):
+    _tablename_ = 'marker_filter'
     id = db.Column(db.Integer, primary_key = True)
     filter_id = db.Column(db.Integer, db.ForeignKey('filter.id'), nullable = False)
-    category_name = db.Column(db.String(50), nullable = False)
+    marker_id = db.Column(db.Integer, db.ForeignKey('marker.id'), nullable = False)
+
 
     def get_json(self):
         return{

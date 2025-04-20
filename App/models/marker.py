@@ -2,33 +2,40 @@ from App.database import db
 
 class Marker(db.Model):
     id = db.Column(db.Integer, primary_key = True)
-    creator_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False)
-    parent_id = db.Column(db.Integer, db.ForeignKey('marker.id'), nullable = True)
-    latitude = db.Column(db.Float, nullable = False, unique = False )
+    name = db.Column(db.String(200), nullable = False)
+    creator_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable = False) 
+    parent_id = db.Column(db.Integer, db.ForeignKey('marker.id'), nullable = True, default = None)
+    lattitude = db.Column(db.Float, nullable = False, unique = False )
     longitude = db.Column(db.Float, nullable = False, unique = False)
-    icon = db.Column(db.String(200), nullable = False)
-    globalVisibility = db.Column(db.Boolean, nullable = False, default = False)
-    category = db.Column(db.String(50), nullable=False)
+    description = db.Column(db.String(500), nullable = False)
+    icon = db.Column(db.String(200), nullable = True)
+    is_global = db.Column(db.Boolean, nullable = True, default = False)
 
-    def __init__(self, creator_id, parent_id, latitude, longitude, icon, globalVisibility, category):
+    creator = db.relationship('User', backref = 'markers')
+    filters = db.relationship('Filter', secondary = "marker_filter", backref = 'markers', lazy = True)
+
+    def _init_(self, name, creator_id, parent_id, lattitude, longitude, description, icon, is_global):
         self.creator_id = creator_id
+        self.name = name
         self.parent_id = parent_id
-        self.latitude = latitude
+        self.lattitude = lattitude
         self.longitude = longitude
+        self.description = description
         self.icon = icon
-        self.globalVisibility = globalVisibility
-        self.category = category
+        self.is_global = is_global
 
     def get_json(self):
         return {
         'id': self.id,
+        'name' : self.name,
         'creator_id': self.creator_id,
         'parent_id': self.parent_id,
-        'latitude': self.latitude,
+        'lattitude': self.lattitude,
         'longitude': self.longitude,
+        'description': self.description,
         'icon': self.icon,
-        'globalVisibility': self.globalVisibility,
-        'category': self.category
+        'is_global': self.is_global,
+        'filters' : [filter.get_json() for filter in self.filters]
     }
 
     def getChildMarkers(self):

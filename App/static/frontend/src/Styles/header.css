@@ -1,52 +1,104 @@
-.ui-header{
+.ui-header {
     grid-row: 1 / 1;
     grid-column: span 2;
-
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    height: 80px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+  }
+  
+  body.light .ui-header {
+    background-color: #609b79;
+    color: #f6f8f6;
+  }
+  
+  body.dark .ui-header {
+    background-color: #1c4e55;
+    color: #0c0000;
+  }
+  
+  .buttons-center{
     display: flex;
     flex-direction: row;
+    gap: 20px;
     justify-content: space-between;
+}
+    
+    .logo {
+        width: 400px;
+        background: linear-gradient(
+            rgba(0, 0, 0, 0.3),
+            rgba(0, 0, 0, 0.3)
+          ),
+          url('https://i.pinimg.com/originals/a7/a5/70/a7a57002920945d8aaca0f530115fc65.gif');
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+  
+  /* Side containers: icon or button + gif filler */
+  .header-side {
+    display: flex;
     align-items: center;
-    background-color: #3C3D37;
-}
-
-
-.ui-header .buttons-left button{
-    background-color: #3C3D37;
-    border: none;
-    color: white;
-    width: 200px;
-    height: 100%;
-    padding: 15px 32px;
+    gap: 10px;
+  }
+  
+  /* Centered title now expands to fill middle */
+  .header-title {
+    flex-grow: 1;
+    font-size: 30px;
+    font-weight: bold;
     text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 24px;
-    cursor: pointer;
-}
-
-.ui-header .buttons-left button:hover{
-    background-color: #697565; 
-}
-
-.ui-header h1{
-    color: white;
-    position: absolute;
-    left: 42%;
-}
-
-.ui-header .buttons-right button{
-    background-color: #3C3D37; 
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
+    margin: 0 20px;
+    white-space: nowrap;
+  }
+  
+  /* Base button style */
+.header-side button {
+    background-color: transparent;
+    padding: 10px 20px;
+    border-radius: 12px;
     font-size: 16px;
-    margin: 4px 2px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 8px;
     cursor: pointer;
-}
-
-.ui-header .buttons-right button:hover{
-    background-color: #481E14; 
-}
+    transition: all 0.3s ease;
+    box-shadow: none;
+    outline: none;
+  }
+  
+  /* LIGHT MODE */
+  body.light .header-side button {
+    color: #ffffff;
+    border: 2px solid #ffffff;
+  }
+  
+  body.light .header-side button:hover {
+    background-color: #ffffff;
+    color: #1f1f1f;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+    transform: scale(1.05);
+  }
+  
+  /* DARK MODE */
+  body.dark .header-side button {
+    color: #4d5563;
+    border: 2px solid #2341a1;
+  }
+  
+  body.dark .header-side button:hover {
+    background-color: #3535af;
+    color: #010607;
+    box-shadow: 0 0 10px rgba(7, 3, 27, 0.5);
+    transform: scale(1.05);
+  }
+  
+  
+  

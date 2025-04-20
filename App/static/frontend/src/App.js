@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { MapContainer, TileLayer, ZoomControl, Marker, Popup } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  ZoomControl,
+  Marker,
+  Popup,
+} from "react-leaflet";
 import { useMapEvents } from "react-leaflet";
 import { Sidebar, SidebarItem } from "./Components/Sidebar";
 import Header from "./Components/Header";
@@ -26,10 +32,27 @@ function App() {
   const [markerDetails, setMarkerDetails] = useState({
     name: "",
     description: "",
+    categories: [],
   });
   const [selectedMarker, setSelectedMarker] = useState(null);
+  const [filterMarkers, setFilteredMarkers] = useState([]);
   const [isPlacingMarker, setIsPlacingMarker] = useState(false);
   const [activeOption, setActiveOption] = useState(null);
+
+  //Filter State
+  //This is the list of preset categories available
+  const [filters, setFilters] = useState([
+    "Science and Technology",
+    "Social Sciences",
+    "Food And Agriculture",
+    "Law",
+    "Engineering",
+    "Recreation",
+    "Bomboclaat"
+  ]);
+
+  //This is the current toggled filters
+  const [activeFilters, setActiveFilters] = useState([]);
 
   //This useEffect is used to change the cursor on the map container when a marker is being placed.
   //It changes the cursor to a marker icon, but only on the map container.
@@ -45,6 +68,19 @@ function App() {
     }
   }, [isPlacingMarker]);
 
+  //Filters the markers everytime the toggled filters change
+  //or a new marker is added
+  useEffect(() => {
+    if (activeFilters.length === 0) setFilteredMarkers(markers);
+    else {
+      const filtered = markers.filter((marker) =>
+        marker.categories.some((cat) => activeFilters.includes(cat))
+      );
+
+      setFilteredMarkers(filtered);
+    }
+  }, [activeFilters, markers]);
+
   return (
     <div className="ui-container">
       <Header />
@@ -58,6 +94,10 @@ function App() {
         changeActiveOption={setActiveOption}
         setIsPlacingMarker={setIsPlacingMarker}
         setMarkerDetails={setMarkerDetails}
+        filters={filters}
+        setFilters={setFilters}
+        activeFilters={activeFilters}
+        setActiveFilters={setActiveFilters}
       >
         <SidebarItem
           name="Markers"
@@ -76,15 +116,12 @@ function App() {
           icon={<FilterIcon />}
           changeActiveOption={setActiveOption}
           //These are the dropdown options for the filters sidebar item.
-          //Some of these may be changed such as Remove Filter and Update Filter being 
+          //Some of these may be changed such as Remove Filter and Update Filter being
           //merged into one option called "Manage Filters"
           //*I reduced it to just Edit Filters and Toggle Filters for now.*
           //You can change it back to Add, Remove and Update Filters if you want
           //and remove the Edit Filters option.
-          selections={[
-            "Edit Filters",
-            "Toggle Filters",
-          ]}
+          selections={["Edit Filters", "Toggle Filters"]}
         />
         <SidebarItem name="Achievements" />
       </Sidebar>
@@ -113,20 +150,24 @@ function App() {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           {/*This is the code for adding markers to the map from the markers state*/}
-          {markers.map((marker) => (
+          {filterMarkers.map((marker) => (
             <Marker
               id={marker.id}
               position={[marker.lattitude, marker.longitude]}
               eventHandlers={{
-                click: () => setSelectedMarker(markers.find((obj) => {
-                  return obj.id === marker.id;
-                })),
+                click: () =>
+                  setSelectedMarker(
+                    markers.find((obj) => {
+                      return obj.id === marker.id;
+                    })
+                  ),
               }}
             >
               <Popup>
                 <div className="marker-popup">
                   <h3>{marker.name}</h3>
                   <p>{marker.description}</p>
+                  <p>{marker.categories}</p>
                   <button
                     onClick={() => {
                       setMarkers((prevMarkers) =>
@@ -142,13 +183,11 @@ function App() {
             </Marker>
           ))}
           <ZoomControl position="topright" />
-          {
-          /*
+          {/*
           This is the code for placing markers on the map
           Its functionality is handled in the ClickCoordinatesHandler component found higher up in the file.
           It uses the useMapEvents hook from react-leaflet to get the lat and lng of the click event.
-          */
-          }
+          */}
           <ClickCoordinatesHandler
             onClick={({ lat, lng }) => {
               if (isPlacingMarker) {
@@ -158,6 +197,7 @@ function App() {
                     id: prevMarkers.length + 1,
                     name: markerDetails.name,
                     description: markerDetails.description,
+                    categories: markerDetails.categories,
                     lattitude: lat,
                     longitude: lng,
                   },

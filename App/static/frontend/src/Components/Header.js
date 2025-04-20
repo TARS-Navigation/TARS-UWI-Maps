@@ -1,6 +1,6 @@
 import React from "react";
+import ModeToggle from "./ModeToggle";
 import { useState, useEffect } from "react";
-
 import "../Styles/header.css";
 
 export default function Header() {
@@ -33,14 +33,20 @@ export default function Header() {
 
   return (
     <div className="ui-header">
-      <div className="buttons-left">
-        <button>Themes</button>
+      <div className="header-side left">
+        <ModeToggle />
       </div>
-
-      <h1>TARS-MAPS UWI STA</h1>
-
-      <div className="buttons-right">
+      
+      <div className="buttons-center">
+        <div className="logo"></div>
+        <h1 className="header-title">TARS-MAPS UWI STA</h1>
+        <div className="logo">{" "}</div>
+      </div>
+      
+      
+      <div className="header-side right">
         {user ? <button onClick={logout}> {user} Logout</button> : <button>Sign in</button>}
+        <button>Logout</button>
       </div>
     </div>
   );

@@ -10,9 +10,6 @@
 {{ super() }}
 
 {% block content %}
-    {% if is_authenticated %}
-        <p> Welcome {{current_user.username}} </p>
-    {% endif %}
     <!-- Mount point for React App Component -->
     <div id="react-root"></div>
 {% endblock %}

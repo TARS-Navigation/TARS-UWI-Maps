@@ -24,14 +24,12 @@ export function AddMarker(props) {
     props.setMarkerDetails({
       name: markerName,
       description: markerDescription,
-      categories: []
+      filters: [],
     });
 
     props.setSelectedCategory(markerCategory);
     props.setCustomCategory(customCategory);
     props.setCustomCategory(customCategory);
-
-
   };
 
   return (
@@ -49,19 +47,18 @@ export function AddMarker(props) {
         ></textarea>
         <label htmlFor="marker-categories">Marker Category:</label>
         <select
-        name="marker-category"
-        id="marker-category"
-        disabled={props.customCategory && props.customCategory.trim() !== ""}
+          name="marker-category"
+          id="marker-category"
+          disabled={props.customCategory && props.customCategory.trim() !== ""}
         >
-        <option value="">-- Select a category --</option>
+          <option value="">-- Select a category --</option>
           {props.filters.map((filter) => (
-          <option key={filter} value={filter}>
-        {filter}
-          </option>
-         ))}
+            <option key={filter} value={filter}>
+              {filter}
+            </option>
+          ))}
         </select>
 
-          
         <label htmlFor="custom-category">New category:</label>
         <input
           type="text"
@@ -70,8 +67,6 @@ export function AddMarker(props) {
           placeholder="Custom category"
         />
 
-
-
         <button type="submit">Add Marker</button>
       </form>
     </div>
@@ -79,7 +74,23 @@ export function AddMarker(props) {
 }
 
 export function RemoveMarker(props) {
-  const removeMarker = () => {
+  if(props.selectedMarker == null)
+    return
+  const removeMarker = async () => {
+    try {
+      const token = localStorage.getItem("access_token");
+      const response = await fetch(`/markers/${props.selectedMarker.id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        credentials: "include",
+      });
+    } catch (err) {
+      console.log("Error deleting marker:", err);
+    }
+
     props.setMarkers((prevMarkers) => {
       return prevMarkers.filter(
         (marker) => marker.id !== props.selectedMarker.id
@@ -98,7 +109,7 @@ export function RemoveMarker(props) {
           <div className="marker-details">
             <h3>{props.selectedMarker.name}</h3>
             <p>{props.selectedMarker.description}</p>
-            <p>{props.selectedMarker.categories}</p>
+            <p>{props.selectedMarker.filters}</p>
           </div>
         )}
         <button onClick={removeMarker}>Remove Marker</button>
@@ -116,7 +127,7 @@ export function ViewMarkers(props) {
             <li key={index} className="marker-item">
               <h3>{marker.name}</h3>
               <p>{marker.description}</p>
-              <p>{marker.categories}</p>
+              <p>{marker.filters}</p>
             </li>
           ))}
         </ul>

@@ -13,11 +13,13 @@ import Header from "./Components/Header";
 import "./Styles/map.css";
 import { ReactComponent as MarkerIcon } from "./Icons/marker.svg";
 import { ReactComponent as FilterIcon } from "./Icons/filter.svg";
+import { marker } from "leaflet";
 
 function ClickCoordinatesHandler({ onClick }) {
   useMapEvents({
     click(e) {
       const { lat, lng } = e.latlng;
+      console.log(lat, lng);
       onClick({ lat, lng });
     },
   });
@@ -29,7 +31,7 @@ function App() {
   const [markerDetails, setMarkerDetails] = useState({
     name: "",
     description: "",
-    categories: [],
+    filters: [],
   });
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [filterMarkers, setFilteredMarkers] = useState([]);
@@ -42,19 +44,48 @@ function App() {
     "Food And Agriculture",
     "Law",
     "Engineering",
-    "Recreation"
+    "Recreation",
   ];
-
 
   const [customFilterMap, setCustomFilterMap] = useState({});
   const [filters, setFilters] = useState([...baseFilters]);
-
 
   const [activeFilters, setActiveFilters] = useState([]);
 
   // These states are managed by AddMarker form
   const [selectedCategory, setSelectedCategory] = useState("");
   const [customCategory, setCustomCategory] = useState("");
+
+  //Load Markers from database
+  useEffect(async () => {
+    try {
+      const token = localStorage.getItem("access_token");
+      const response = await fetch("/markers", {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        credentials: "include",
+      });
+      const data = await response.json();
+
+      data.forEach((marker) => {
+        let newMarker = {
+          id: marker.id,
+          name: marker.name,
+          description: marker.description,
+          filters: marker.filters.map((f) => f.name),
+          lattitude: marker.lattitude,
+          longitude: marker.longitude,
+        };
+
+        setMarkers((prev) => [...prev, newMarker]);
+      });
+    } catch (err) {
+      console.log("Error loading Markers:", err);
+    }
+  }, []);
 
   useEffect(() => {
     const mapContainer = document.getElementById("map");
@@ -64,9 +95,12 @@ function App() {
   }, [isPlacingMarker]);
 
   useEffect(() => {
-    if (activeFilters.length === 0) {
-      setFilteredMarkers(markers);
-      return;
+    if (activeFilters.length === 0) setFilteredMarkers(markers);
+    else {
+      const filtered = markers.filter((marker) =>
+        marker.filters.some((cat) => activeFilters.includes(cat))
+      );
+      setFilteredMarkers(filtered);
     }
   
     const visibleMarkerIds = new Set();
@@ -106,6 +140,80 @@ function App() {
     setFilteredMarkers(markers.filter((m) => visibleMarkerIds.has(m.id)));
   }, [activeFilters, markers, customFilterMap]);
 
+  const AddNewMarker = async (finalCategory, lattitude, longitude) => {
+    try {
+      const token = localStorage.getItem("access_token");
+
+      const newMarker = {
+        name: markerDetails.name,
+        parent_id: null,
+        description: markerDetails.description,
+        icon: "",
+        filter_name: finalCategory,
+        lattitude: lattitude,
+        longitude: longitude,
+      };
+      console.log(finalCategory);
+      const response = await fetch("/markers", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        credentials: "include",
+        body: JSON.stringify(newMarker),
+      });
+
+      const data = await response.json();
+
+      let marker = {
+        id: data.id,
+        name: data.name,
+        description: data.description,
+        filters: data.filters.map((f) => f.name),
+        lattitude: data.lattitude,
+        longitude: data.longitude,
+      };
+
+      setMarkers((prev) => [...prev, marker]);
+    } catch (err) {
+      console.log("Error loading Markers:", err);
+    }
+  };
+
+  const removeMarker = async () => {
+    try {
+      const token = localStorage.getItem("access_token");
+      const response = await fetch(`/markers/${selectedMarker.id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        credentials: "include",
+      });
+      setMarkers((prev) => {
+        const updatedMarkers = prev.filter((m) => m.id !== selectedMarker.id);
+
+        const remainingfilters = new Set();
+        updatedMarkers.forEach((m) => {
+          m.filters.forEach((cat) => remainingfilters.add(cat));
+        });
+
+        setFilters((prevFilters) =>
+          prevFilters.filter(
+            (f) => baseFilters.includes(f) || remainingfilters.has(f)
+          )
+        );
+
+        return updatedMarkers;
+      });
+      setSelectedMarker(null);
+    } catch (err) {
+      console.log("Error deleting marker:", err);
+    }
+  };
+
   return (
     <div className="ui-container">
       <Header />
@@ -133,7 +241,12 @@ function App() {
           name="Markers"
           icon={<MarkerIcon />}
           changeActiveOption={setActiveOption}
-          selections={["Add Marker", "Remove Marker", "View Markers", "Update Marker"]}
+          selections={[
+            "Add Marker",
+            "Remove Marker",
+            "View Markers",
+            "Update Marker",
+          ]}
         />
         <SidebarItem
           name="Filters"
@@ -166,27 +279,19 @@ function App() {
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
 
-          
           <ClickCoordinatesHandler
             onClick={({ lat, lng }) => {
               if (isPlacingMarker) {
                 const finalCategory =
-                  customCategory.trim() !== "" ? customCategory : selectedCategory;
+                  customCategory.trim() !== ""
+                    ? customCategory
+                    : selectedCategory;
 
                 if (finalCategory && !filters.includes(finalCategory)) {
                   setFilters((prev) => [...prev, finalCategory]);
                 }
 
-                const newMarker = {
-                  id: markers.length + 1,
-                  name: markerDetails.name,
-                  description: markerDetails.description,
-                  categories: [finalCategory],
-                  lattitude: lat,
-                  longitude: lng,
-                };
-
-                setMarkers((prevMarkers) => [...prevMarkers, newMarker]);
+                AddNewMarker(finalCategory, lat, lng);
                 setIsPlacingMarker(false);
                 setSelectedCategory("");
                 setCustomCategory("");
@@ -209,29 +314,10 @@ function App() {
                 <div className="marker-popup">
                   <h3>{marker.name}</h3>
                   <p>{marker.description}</p>
-                  <p>{marker.categories.join(", ")}</p>
+                  <p>{marker.filters.join(", ")}</p>
                   <button
                     onClick={() => {
-              
-                      setMarkers((prev) => {
-                        const updatedMarkers = prev.filter((m) => m.id !== marker.id);
-                    
-                        const remainingCategories = new Set();
-                        updatedMarkers.forEach((m) => {
-                          m.categories.forEach((cat) => remainingCategories.add(cat));
-                        });
-                    
-                        setFilters((prevFilters) =>
-                          prevFilters.filter(
-                            (f) => baseFilters.includes(f) || remainingCategories.has(f)
-                          )
-                        );
-                    
-                        return updatedMarkers;
-                      });
-                    
-                      setSelectedMarker(null);
-                 
+                      removeMarker();
                     }}
                   >
                     Remove Marker

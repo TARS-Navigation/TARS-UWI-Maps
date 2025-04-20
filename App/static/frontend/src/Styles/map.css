@@ -1,7 +1,7 @@
 /* UI CONTAINER STYLES */
 .ui-container{
     display: grid;
-    grid-template-rows: 8vh 92vh;
+    grid-template-rows: 10vh 90vh;
     grid-template-columns: 20% 80%;
 }
 

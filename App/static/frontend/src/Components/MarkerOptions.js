@@ -19,12 +19,19 @@ export function AddMarker(props) {
     const markerName = formData.get("marker-name");
     const markerDescription = formData.get("marker-description");
     const markerCategory = formData.get("marker-category");
+    const customCategory = formData.get("custom-category");
 
     props.setMarkerDetails({
       name: markerName,
       description: markerDescription,
-      categories: [markerCategory]
+      categories: []
     });
+
+    props.setSelectedCategory(markerCategory);
+    props.setCustomCategory(customCategory);
+    props.setCustomCategory(customCategory);
+
+
   };
 
   return (
@@ -41,11 +48,30 @@ export function AddMarker(props) {
           required
         ></textarea>
         <label htmlFor="marker-categories">Marker Category:</label>
-        <select name="marker-category" id="marker-category">
+        <select
+        name="marker-category"
+        id="marker-category"
+        disabled={props.customCategory && props.customCategory.trim() !== ""}
+        >
+        <option value="">-- Select a category --</option>
           {props.filters.map((filter) => (
-            <option value={filter}> {filter}</option>
-          ))}
+          <option key={filter} value={filter}>
+        {filter}
+          </option>
+         ))}
         </select>
+
+          
+        <label htmlFor="custom-category">New category:</label>
+        <input
+          type="text"
+          id="custom-category"
+          name="custom-category"
+          placeholder="Custom category"
+        />
+
+
+
         <button type="submit">Add Marker</button>
       </form>
     </div>

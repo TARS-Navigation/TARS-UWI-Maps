@@ -5,7 +5,7 @@ import {
   ViewMarkers,
   UpdateMarker,
 } from "./MarkerOptions";
-import { EditFilter, ToggleFilter } from "./FilterOptions";
+import { EditFilter, ToggleFilter, AddCustomFilter } from "./FilterOptions";
 
 import "../Styles/sidebar.css";
 
@@ -22,6 +22,7 @@ export function Sidebar(props) {
     UpdateMarker: UpdateMarker,
     ToggleFilters: ToggleFilter,
     EditFilters: EditFilter,
+    AddCustomFilters: AddCustomFilter,
     null: () => <div></div>,
   };
 
@@ -65,7 +66,10 @@ export function Sidebar(props) {
               filters : props.filters,
               setFilters : props.setFilters,
               activeFilters : props.activeFilters,
-              setActiveFilters : props.setActiveFilters
+              setActiveFilters : props.setActiveFilters,
+              setSelectedCategory: props.setSelectedCategory,      
+              setCustomCategory: props.setCustomCategory,          
+              customCategory: props.customCategory     
             })
           : React.createElement(componentMap[prevOption], {
             //Pass in the SAME props that are needed for the component here ALSO else code will break.
@@ -78,7 +82,10 @@ export function Sidebar(props) {
               filters : props.filters,
               setFilters : props.setFilters,
               activeFilters : props.activeFilters,
-              setActiveFilters : props.setActiveFilters
+              setActiveFilters : props.setActiveFilters,
+              setSelectedCategory: props.setSelectedCategory,      
+              setCustomCategory: props.setCustomCategory,          
+              customCategory: props.customCategory     
             })}
       </div>
     </div>

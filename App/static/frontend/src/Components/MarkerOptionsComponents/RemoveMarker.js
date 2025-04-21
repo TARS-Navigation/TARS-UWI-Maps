@@ -34,7 +34,7 @@ export default function RemoveMarker(props) {
         <h2>Remove Marker</h2>
         <p>Click on the marker you want to remove.</p>
         <h2>Selected Marker: </h2>
-        {props.selectedMarker && (
+        {props.selectedMarker && (props.selectedMarker.is_global && props.userPermissions) ?(
           <>
             <div className="marker-details">
               <h3>{props.selectedMarker.name}</h3>
@@ -43,7 +43,8 @@ export default function RemoveMarker(props) {
             </div>
             <button onClick={removeMarker}>Remove Marker</button>
           </>
-        )}
+        ) :
+        <div>Can not Edit Admin Marker</div>}
       </div>
     </div>
   );

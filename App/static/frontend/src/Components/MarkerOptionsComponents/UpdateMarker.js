@@ -67,13 +67,43 @@ export default function UpdateMarker(props) {
     }));
   };
 
-  const updateMarker = (e) => {
+  const addNewFilters = async () => {
+    try {
+      const token = localStorage.getItem("access_token");
+      for (let category of selectedCategories) {
+        if (!props.filters.includes(category)) {
+          const response = await fetch("/filters", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            credentials: "include",
+            body: JSON.stringify({name:category}),
+          });
+          
+          const data = await response.json();
+
+          props.setFilters((prev) => [...prev, data.name]);
+          props.setFilterMap((prev)=> ({
+            ...prev,
+            [data.name]: data.id,
+          }))
+        }
+      }
+    } catch (err) {
+      console.log("Error loading Markers:", err);
+    }
+  };
+
+  const updateMarker = async (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.target);
     const markerName = formData.get("name");
     const markerDescription = formData.get("description");
 
+    await addNewFilters();
     props.setMarkers((prevMarkers) => {
       return prevMarkers.map((marker) => {
         if (marker.id === props.selectedMarker.id) {

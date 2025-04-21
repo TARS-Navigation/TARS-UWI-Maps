@@ -55,6 +55,11 @@
     background-color: grey;
 }
 
+.icon-option-active:hover{
+    background-color: green;
+    transform: scale(1.2);
+}
+
 .marker-name-input-field{
 
 }

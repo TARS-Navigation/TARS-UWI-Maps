@@ -1,11 +1,3 @@
-.filter-item{
-
-}
-
-.filter-item:hover{
-    cursor: pointer;
-}
-
 .filter-form{
     display: flex;
     flex-direction: column;
@@ -13,4 +5,92 @@
 
 .filter-form label{
     margin-top:0.5rem;
+}
+
+.edit-filter-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.filter-list{
+    width: 380px;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0px;
+    overflow-y: auto;
+    border: 1px solid black;
+    background-color: transparent;
+}
+
+.filter-item{
+    width: 340px;
+    height: 40px;
+    padding: 10px;
+    border: 1px solid black;
+    background-color: white;
+    color: black;
+    font-size: 18px;
+    transition: all 0.3s ease-in-out;
+}
+
+.filter-item:hover{
+    cursor: pointer;
+    background-color: rgba(255,255,255, 0.4);
+}
+
+.selected-filter-name-container{
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.selected-filter{
+
+}
+
+.rename-button{
+    background-color: white;
+    border: 1px solid black;
+}
+
+.marker-list{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.marker-item{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    border: 1px solid black;
+}
+
+.marker-item-icon{
+    width: 36px;
+    height: 36px;   
+    border-radius: 50px;
+    padding: 2px;
+}
+
+.marker-item-remove{
+    font-size: 10px;
+    padding: 10px;
+    border-radius: 50%;
+    background-color: red;
+    color: white;
+}
+
+.marker-item-add{
+    font-size: 10px;
+    padding: 10px;
+    background-color: green;
+    color: white;
+}
+.available-marker-container{
+    display: flex;
+    flex-direction: column;
 }

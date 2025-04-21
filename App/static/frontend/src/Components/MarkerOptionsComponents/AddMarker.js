@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import "../../Styles/marker_options.css";
+import "../../Styles/add_marker.css";
 
 export default function AddMarker(props) {
   const [selectedCategories, setSelectedCategories] = useState([

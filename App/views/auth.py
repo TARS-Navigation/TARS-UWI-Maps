@@ -44,15 +44,6 @@ def user_page():
     return render_template('users.html', users=users)
 
 
-@auth_views.route('/identify', methods=['GET'])
-@jwt_required()
-def identify_page():
-    return render_template(
-        'message.html',
-        title="Identify",
-        message=
-        f"You are logged in as {current_user.id} - {current_user.username}")
-
 
 @auth_views.route('/login', methods=['POST'])
 def login_action():

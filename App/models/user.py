@@ -1,5 +1,6 @@
 from werkzeug.security import check_password_hash, generate_password_hash
 from App.database import db
+from .filter import Filter
 from .marker import Marker
 
 class User(db.Model):
@@ -19,6 +20,9 @@ class User(db.Model):
 
     def get_markers(self):
         return Marker.query.filter_by(creator_id = self.id)
+    
+    def get_filters(self):
+        return Filter.query.filter_by(creator_id = self.id)
 
     def get_json(self):
         return{

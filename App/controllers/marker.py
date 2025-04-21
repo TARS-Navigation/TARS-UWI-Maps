@@ -32,7 +32,6 @@ def create_marker(name, creator_id, parent_id, lattitude, longitude, icon, descr
   )
 
   for filter_name in filter_names:
-    print(filter_name)
     filter = Filter.query.filter_by(name = filter_name).first()
     marker.filters.append(filter)
   

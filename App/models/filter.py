@@ -12,6 +12,13 @@ class Filter(db.Model):
         self.creator_id = creator_id
         self.name = name
         self.is_global = is_global
+    def get_filter_json(self):
+        return{
+            'id':self.id,
+            'creator_id': self.creator_id,
+            'name' : self.name,
+            'is_global' : self.is_global,
+        }
 
     def get_json(self):
         return{
@@ -19,4 +26,5 @@ class Filter(db.Model):
             'creator_id': self.creator_id,
             'name' : self.name,
             'is_global' : self.is_global,
+            'markers' : [marker.get_marker_json() for marker in self.markers]
         }

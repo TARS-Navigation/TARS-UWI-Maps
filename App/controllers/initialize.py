@@ -20,9 +20,11 @@ def initialize():
     filter3 = Filter(creator_id= None, name = "Food and Agriculture", is_global=True)
     filter4 = Filter(creator_id= None, name = "Law", is_global=True)
     filter5 = Filter(creator_id= None, name = "Engineering", is_global=True)
-    filter6 = Filter(creator_id= None, name = "Recreation", is_global=True)
+    filter6 = Filter(creator_id= None, name = "Sport", is_global=True)
+    filter7 = Filter(creator_id= None, name = "Humanities and Education", is_global=True)
+    filter8 = Filter(creator_id= None, name = "Recreation", is_global=True)
 
-    filters = [filter1, filter2, filter3, filter4, filter5, filter6]
+    filters = [filter1, filter2, filter3, filter4, filter5, filter6, filter7, filter8]
     db.session.add_all(filters)
 
     marker1 = Marker(name = "hi",creator_id= 1, parent_id=None, lattitude=10.6432808853968, longitude=-61.40189930904827, description="asd", icon="redmarker", is_global=True)

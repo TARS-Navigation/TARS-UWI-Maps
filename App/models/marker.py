@@ -25,6 +25,19 @@ class Marker(db.Model):
         self.icon = icon
         self.is_global = is_global
 
+    def get_marker_json(self):
+        return {
+        'id': self.id,
+        'name' : self.name,
+        'creator_id': self.creator_id,
+        'parent_id': self.parent_id,
+        'lattitude': self.lattitude,
+        'longitude': self.longitude,
+        'description': self.description,
+        'icon': self.icon,
+        'is_global': self.is_global,
+        }
+
     def get_json(self):
         achievement_id = self.achievement.id if self.achievement else None
 
@@ -38,6 +51,7 @@ class Marker(db.Model):
         'description': self.description,
         'icon': self.icon,
         'is_global': self.is_global,
+
         'filters' : [filter.get_json() for filter in self.filters],
         'achievement_id': achievement_id 
     }

@@ -44,7 +44,37 @@ export default function AddMarker(props) {
     });
   };
 
-  const addMarker = (e) => {
+  const addNewFilters = async () => {
+    try {
+      const token = localStorage.getItem("access_token");
+      for (let category of selectedCategories) {
+        if (!props.filters.includes(category)) {
+          console.log("ok")
+          const response = await fetch("/filters", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            credentials: "include",
+            body: JSON.stringify({name:category}),
+          });
+          
+          const data = await response.json();
+
+          props.setFilters((prev) => [...prev, data.name]);
+          props.setFilterMap((prev)=> ({
+            ...prev,
+            [data.name]: data.id,
+          }))
+        }
+      }
+    } catch (err) {
+      console.log("Error loading Markers:", err);
+    }
+  };
+
+  const addMarker = async (e) => {
     e.preventDefault();
     props.setIsPlacingMarker(true);
 
@@ -52,6 +82,7 @@ export default function AddMarker(props) {
     const markerName = formData.get("marker-name");
     const markerDescription = formData.get("marker-description");
 
+    await addNewFilters();
     props.setMarkerDetails({
       name: markerName,
       description: markerDescription,

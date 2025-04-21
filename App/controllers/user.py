@@ -1,3 +1,4 @@
+from flask import jsonify
 from App.models import User
 from App.database import db
 
@@ -12,6 +13,10 @@ def get_user_by_username(username):
 
 def get_user(id):
     return User.query.get(id)
+
+def get_user_permissions(id):
+    user = User.query.get(id)
+    return jsonify(is_admin=user.is_admin)
 
 def get_all_users():
     return User.query.all()

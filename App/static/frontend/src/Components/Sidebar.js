@@ -1,10 +1,8 @@
 import React, { useState } from "react";
-import {
-  AddMarker,
-  RemoveMarker,
-  ViewMarkers,
-  UpdateMarker,
-} from "./MarkerOptions";
+import AddMarker from "./MarkerOptionsComponents/AddMarker";
+import RemoveMarker from "./MarkerOptionsComponents/RemoveMarker";
+import ViewMarkers from "./MarkerOptionsComponents/ViewMarkers";
+import UpdateMarker from "./MarkerOptionsComponents/UpdateMarker";
 import { EditFilter, ToggleFilter, AddCustomFilter } from "./FilterOptions";
 
 import "../Styles/sidebar.css";
@@ -27,7 +25,11 @@ export function Sidebar(props) {
   };
 
   return (
-    <div className="ui-sidebar-container">
+    <div
+      className={`ui-sidebar-container ${
+        props.activeOption != null ? "ui-sidebar-container-overflow" : ""
+      }`}
+    >
       <div
         className={`ui-sidebar-content ${
           props.activeOption != null ? "ui-sidebar-content-moved" : ""
@@ -48,7 +50,7 @@ export function Sidebar(props) {
         >
           back
         </button>
-        { /* 
+        {/* 
           This is where the dropdown option's component will be rendered, so the form for the 'Add Marker' 
           component will be rendered here and is dynamically created based on the active option.
           If you are adding a new component that needs props be sure to add them to the props arguemen
@@ -56,39 +58,39 @@ export function Sidebar(props) {
         */}
         {props.activeOption != null
           ? React.createElement(componentMap[props.activeOption], {
-            //Pass in the props that are needed for the component here.
+              //Pass in the props that are needed for the component here.
               setMarkerDetails: props.setMarkerDetails,
               markers: props.markers,
               setMarkers: props.setMarkers,
               selectedMarker: props.selectedMarker,
               setSelectedMarker: props.setSelectedMarker,
               setIsPlacingMarker: props.setIsPlacingMarker,
-              filters : props.filters,
-              setFilters : props.setFilters,
-              activeFilters : props.activeFilters,
-              setActiveFilters : props.setActiveFilters,
-              setSelectedCategory: props.setSelectedCategory,      
-              setCustomCategory: props.setCustomCategory,          
+              filters: props.filters,
+              setFilters: props.setFilters,
+              activeFilters: props.activeFilters,
+              setActiveFilters: props.setActiveFilters,
+              setSelectedCategory: props.setSelectedCategory,
+              setCustomCategory: props.setCustomCategory,
               customCategory: props.customCategory,
-              customFilterMap : props.customFilterMap,
-              setCustomFilterMap: props.setCustomFilterMap,     
+              customFilterMap: props.customFilterMap,
+              setCustomFilterMap: props.setCustomFilterMap,
             })
           : React.createElement(componentMap[prevOption], {
-            //Pass in the SAME props that are needed for the component here ALSO else code will break.
+              //Pass in the SAME props that are needed for the component here ALSO else code will break.
               setMarkerDetails: props.setMarkerDetails,
               markers: props.markers,
               setMarkers: props.setMarkers,
               selectedMarker: props.selectedMarker,
               setSelectedMarker: props.setSelectedMarker,
               setIsPlacingMarker: props.setIsPlacingMarker,
-              filters : props.filters,
-              setFilters : props.setFilters,
-              activeFilters : props.activeFilters,
-              setActiveFilters : props.setActiveFilters,
-              setSelectedCategory: props.setSelectedCategory,      
-              setCustomCategory: props.setCustomCategory,          
+              filters: props.filters,
+              setFilters: props.setFilters,
+              activeFilters: props.activeFilters,
+              setActiveFilters: props.setActiveFilters,
+              setSelectedCategory: props.setSelectedCategory,
+              setCustomCategory: props.setCustomCategory,
               customCategory: props.customCategory,
-              customFilterMap : props.customFilterMap,
+              customFilterMap: props.customFilterMap,
               setCustomFilterMap: props.setCustomFilterMap,
             })}
       </div>

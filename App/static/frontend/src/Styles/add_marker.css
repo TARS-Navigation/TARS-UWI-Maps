@@ -1,0 +1,211 @@
+/* --- Base Styles --- */
+.marker-options-contianer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 340px;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(6px);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  /* --- Form Layout --- */
+  .marker-options-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .marker-form-name {
+    font-size: 1.7rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    text-align: center;
+    color: #d0e6e6f5;
+  }
+  
+  .marker-form-label {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #dbecec;
+  }
+  
+  /* --- Inputs --- */
+  .marker-name-input-field,
+  .marker-description-input-field,
+  .marker-selected-categories-field,
+  #custom-category,
+  #marker-category {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border-radius: 12px;
+    border: 1px solid #aacbb3;
+    background-color: #f7fdf9;
+    color: #f3f3f3;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+  
+  .marker-name-input-field:focus,
+  .marker-description-input-field:focus,
+  .marker-selected-categories-field:focus,
+  #custom-category:focus,
+  #marker-category:focus {
+    outline: none;
+    border-color: #76b9a5;
+    box-shadow: 0 0 0 3px rgba(118, 185, 165, 0.3);
+  }
+  
+  .marker-description-input-field,
+  .marker-selected-categories-field {
+    min-height: 60px;
+    resize: vertical;
+  }
+  
+  /* --- Icon Selection --- */
+  .marker-icon-select-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    max-height: 100px;
+    overflow-y: auto;
+    padding: 0.5rem;
+    border: 1px solid #aacbb3;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.2);
+  }
+  
+  .icon-option {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    padding: 4px;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+  }
+  
+  .icon-option:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+    background-color: rgba(140, 190, 160, 0.3);
+  }
+  
+  .icon-option-active {
+    background-color: #8cd9a6;
+    transform: scale(1.15);
+  }
+
+  .icon-option-active:hover{
+    background-color: green;
+    transform: scale(1.2);
+  }
+  
+  /* --- Category Control Layout --- */
+  .category-container,
+  .custom-category-container {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+  
+  /* --- Fancy Buttons --- */
+  .category-add-button,
+  .reset-categories-button,
+  button[type="submit"] {
+    padding: 0.9rem 5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 999px;
+    border: none;
+    background-color: #7cd8a0;
+    color: white;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .category-add-button:hover,
+  .reset-categories-button:hover,
+  button[type="submit"]:hover {
+    background-color: #69c08c;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  .category-add-button:active,
+  .reset-categories-button:active,
+  button[type="submit"]:active {
+    transform: scale(0.96);
+  }
+  
+  /* --- Theme: Light --- */
+  body.light .marker-options-contianer {
+    background-color: rgba(199, 192, 128, 0.308);
+    color: #f3eded;
+  }
+  
+  body.light .marker-name-input-field,
+  body.light .marker-description-input-field,
+  body.light .marker-selected-categories-field,
+  body.light #custom-category,
+  body.light #marker-category {
+    background-color: #95e4d348;
+    color: #ffffff;
+    border: 1px solid #aacbb3;
+  }
+  
+  body.light button[type="submit"] {
+    background-color: #7cd8a0;
+  }
+  
+  body.light button[type="submit"]:hover {
+    background-color: #69c08c;
+  }
+
+  body.light .category-add-button,
+  body.light .reset-categories-button {
+    background-color: #5ba97a;
+  }
+  
+  body.light .category-add-button:hover,
+  body.light .reset-categories-button:hover {
+    background-color: #4b9167;
+  }
+  
+  
+  /* --- Theme: Dark --- */
+  body.dark .marker-options-contianer {
+    background-color: rgba(40, 60, 50, 0.6);
+    color: #f1f1f1;
+  }
+  
+  body.dark .marker-name-input-field,
+  body.dark .marker-description-input-field,
+  body.dark .marker-selected-categories-field,
+  body.dark #custom-category,
+  body.dark #marker-category {
+    background-color: #2e3c34;
+    color: #e6e6e6;
+    border: 1px solid #6e8c7d;
+  }
+  
+  body.dark button[type="submit"] {
+    background-color: #5ba97a;
+  }
+  
+  body.dark button[type="submit"]:hover {
+    background-color: #4b9167;
+  }
+  
+  body.dark .category-add-button,
+  body.dark .reset-categories-button {
+    background-color: #5ba97a;
+  }
+  
+  body.dark .category-add-button:hover,
+  body.dark .reset-categories-button:hover {
+    background-color: #4b9167;
+  }
+  

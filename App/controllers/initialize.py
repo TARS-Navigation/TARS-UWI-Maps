@@ -25,9 +25,9 @@ def initialize():
     filters = [filter1, filter2, filter3, filter4, filter5, filter6]
     db.session.add_all(filters)
 
-    marker1 = Marker(name = "hi",creator_id= 1, parent_id=None, lattitude=10.6432808853968, longitude=-61.40189930904827, description="asd", icon=None, is_global=True)
-    marker2 = Marker(name = "hi",creator_id= 1, parent_id=None, lattitude=10.644304196435085, longitude=-61.40023657791617, description="asd", icon=None, is_global=True)
-    marker3 = Marker(name = "hi",creator_id= 1, parent_id=None, lattitude=10.642574060302948, longitude=-61.398606028676966, description="asd", icon=None, is_global=True)
+    marker1 = Marker(name = "hi",creator_id= 1, parent_id=None, lattitude=10.6432808853968, longitude=-61.40189930904827, description="asd", icon="redmarker", is_global=True)
+    marker2 = Marker(name = "hi",creator_id= 1, parent_id=None, lattitude=10.644304196435085, longitude=-61.40023657791617, description="asd", icon="bluemarker", is_global=True)
+    marker3 = Marker(name = "hi",creator_id= 1, parent_id=None, lattitude=10.642574060302948, longitude=-61.398606028676966, description="asd", icon="orangemarker", is_global=True)
 
     markers = [marker1, marker2, marker3]
 

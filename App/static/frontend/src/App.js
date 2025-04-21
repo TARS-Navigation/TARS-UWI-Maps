@@ -7,6 +7,7 @@ import {
   Popup,
 } from "react-leaflet";
 import { useMapEvents } from "react-leaflet";
+import {  Icon } from "leaflet";
 import { Sidebar, SidebarItem } from "./Components/Sidebar";
 import Header from "./Components/Header";
 
@@ -31,7 +32,9 @@ function App() {
     name: "",
     description: "",
     filters: [],
+    icon: ""
   });
+  const [markerIcons, setMarkerIcons] = useState([]);
   const [selectedMarker, setSelectedMarker] = useState(null);
   const [filterMarkers, setFilteredMarkers] = useState([]);
   const [isPlacingMarker, setIsPlacingMarker] = useState(false);
@@ -40,8 +43,10 @@ function App() {
   const baseFilters = [
     "Science and Technology",
     "Social Sciences",
-    "Food And Agriculture",
+    "Food and Agriculture",
     "Law",
+    "Sport",
+    "Humanities and Education",
     "Engineering",
     "Recreation",
   ];
@@ -77,11 +82,11 @@ function App() {
           name: marker.name,
           description: marker.description,
           filters: marker.filters.map((f) => f.name),
+          icon: marker.icon,
           lattitude: marker.lattitude,
           longitude: marker.longitude,
           achievement_id: marker.achievement_id || null
         };
-        console.log(data);
         setMarkers((prev) => [...prev, newMarker]);
       });
     } catch (err) {
@@ -167,7 +172,7 @@ function App() {
   }, [activeFilters, markers, customFilterMap]);
 
   //Adds new marker to state and database
-  const AddNewMarker = async (finalCategory, lattitude, longitude) => {
+  const AddNewMarker = async (lattitude, longitude) => {
     try {
       const token = localStorage.getItem("access_token");
 
@@ -175,12 +180,12 @@ function App() {
         name: markerDetails.name,
         parent_id: null,
         description: markerDetails.description,
-        icon: "",
-        filter_name: finalCategory,
+        icon: markerDetails.icon,
+        filter_names: markerDetails.filters,
         lattitude: lattitude,
         longitude: longitude,
       };
-      console.log(finalCategory);
+      
       const response = await fetch("/markers", {
         method: "POST",
         headers: {
@@ -243,6 +248,7 @@ function App() {
     }
   };
 
+<<<<<<< HEAD
   const toggleVisited = async (achievementId) => {
     const token = localStorage.getItem("access_token");
 
@@ -263,6 +269,36 @@ function App() {
     }
   };
 
+=======
+  const iconNames = [
+    "redmarker",
+    "blackmarker",
+    "bluemarker",
+    "coffee",
+    "food",
+    "greenmarker",
+    "landmark",
+    "orangemarker",
+    "purplemarker",
+    "recreation",
+    "shop",
+    "sport1",
+    "sport2",
+    "yellowmarker"
+  ]
+
+  const icons = iconNames.reduce((acc, name) => {
+    acc[name] = new Icon({
+      iconUrl: require(`./Icons/${name}.png`),
+      iconSize: [38, 38],
+      iconAnchor: [19, 38],
+      popupAnchor: [0, -38],
+    });
+    return acc;
+  }, {});
+
+  console.log(icons);
+>>>>>>> origin/main
   return (
     <div className="ui-container">
       <Header />
@@ -331,16 +367,15 @@ function App() {
           <ClickCoordinatesHandler
             onClick={({ lat, lng }) => {
               if (isPlacingMarker) {
-                const finalCategory =
-                  customCategory.trim() !== ""
-                    ? customCategory
-                    : selectedCategory;
 
-                if (finalCategory && !filters.includes(finalCategory)) {
-                  setFilters((prev) => [...prev, finalCategory]);
+                if (markerDetails.filters) {
+                  markerDetails.filters.map((filter) => {
+                    if(!filters.includes(filter))
+                      setFilters((prev) => [...prev,filter]);
+                  });
                 }
 
-                AddNewMarker(finalCategory, lat, lng);
+                AddNewMarker( lat, lng);
                 setIsPlacingMarker(false);
                 setSelectedCategory("");
                 setCustomCategory("");
@@ -352,6 +387,7 @@ function App() {
             <Marker
               key={marker.id}
               position={[marker.lattitude, marker.longitude]}
+              icon = {icons[marker.icon]}
               eventHandlers={{
                 click: () =>
                   setSelectedMarker(

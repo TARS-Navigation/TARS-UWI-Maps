@@ -18,9 +18,8 @@ def get_marker_filters(id):
   marker = Marker.query.get(id)
   return [filter.get_json() for filter in marker.filters]
 
-def create_marker(name, creator_id, parent_id, lattitude, longitude, icon, description, filter_name):
+def create_marker(name, creator_id, parent_id, lattitude, longitude, icon, description, filter_names):
   user = User.query.get(creator_id)
-  filter = Filter.query.filter_by(name = filter_name).first()
   marker = Marker(
     name = name,
     creator_id = creator_id,
@@ -31,7 +30,12 @@ def create_marker(name, creator_id, parent_id, lattitude, longitude, icon, descr
     description= description,
     is_global = user.is_admin
   )
-  marker.filters.append(filter)
+
+  for filter_name in filter_names:
+    print(filter_name)
+    filter = Filter.query.filter_by(name = filter_name).first()
+    marker.filters.append(filter)
+  
   db.session.add(marker)
   db.session.commit()
   return marker.get_json()

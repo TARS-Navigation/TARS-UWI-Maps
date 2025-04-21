@@ -34,7 +34,7 @@ def add_marker():
         longitude=data['longitude'],
         icon=data['icon'],
         description= data['description'],
-        filter_name=data['filter_name']
+        filter_names=data['filter_names']
     )
     return marker, 201
 

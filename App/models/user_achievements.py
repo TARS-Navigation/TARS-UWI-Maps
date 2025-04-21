@@ -14,7 +14,9 @@ class UserAchievements(db.Model):
 
     def get_json(self):
      return {
-        'id': self.id,
-        'achievement': self.achievement.name,
+        'id': self.achievement.id,
+        'name': self.achievement.name,
+        'description': self.achievement.description,
+        'icon': self.achievement.icon,
         'visited': self.visited
-     }
+       }

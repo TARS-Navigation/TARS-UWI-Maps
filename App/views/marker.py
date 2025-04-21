@@ -10,7 +10,8 @@ marker_views = Blueprint('marker_views', __name__)
 def get_markers():
   user_id = get_jwt_identity()
   markers = get_all_markers(user_id)
-  return markers, 200
+  print("MARKERS JSON:", markers)
+  return jsonify(markers), 200
 
 @marker_views.route('/markers/<int:id>', methods=['GET'])
 @jwt_required()
@@ -43,7 +44,7 @@ def update_marker_route(id):
   data = request.json
   updated_marker = update_marker(
     id = id,
-    latitude = data.get('latitude'),
+    lattitude = data.get('lattitude'),
     longitude = data.get('longitude'),
     icon = data.get('icon'),
     global_visibility = data.get('global_visibility'),

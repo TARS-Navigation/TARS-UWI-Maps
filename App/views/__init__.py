@@ -9,5 +9,7 @@ from .filter import filters_views
 from .marker import marker_views 
 
 
+
 views = [user_views, index_views, auth_views, achievement_views, filters_views, marker_views] 
 # blueprints must be added to this list
+

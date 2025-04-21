@@ -49,6 +49,8 @@ function App() {
   const [customFilterMap, setCustomFilterMap] = useState({});
   const [filters, setFilters] = useState([...baseFilters]);
 
+  const [visitedAchievements, setVisitedAchievements] = useState({});
+
   const [activeFilters, setActiveFilters] = useState([]);
 
   // These states are managed by AddMarker form
@@ -77,6 +79,7 @@ function App() {
           filters: marker.filters.map((f) => f.name),
           lattitude: marker.lattitude,
           longitude: marker.longitude,
+          achievement_id: marker.achievement_id || null
         };
         console.log(data);
         setMarkers((prev) => [...prev, newMarker]);
@@ -85,6 +88,36 @@ function App() {
       console.log("Error loading Markers:", err);
     }
   }, []);
+
+
+  useEffect(() => {
+    const loadVisitedAchievements = async () => {
+      try {
+        const token = localStorage.getItem("access_token");
+        const response = await fetch("/api/visited-achievements", {
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+  
+        if (response.ok) {
+          const data = await response.json(); 
+          const visitedMap = {};
+          data.forEach((id) => {
+            visitedMap[id] = true;
+          });
+          setVisitedAchievements(visitedMap); 
+        }
+      } catch (err) {
+        console.log("Error loading visited achievements:", err);
+      }
+    };
+  
+    loadVisitedAchievements();
+  }, []);
+
 
   useEffect(() => {
     const mapContainer = document.getElementById("map");
@@ -167,6 +200,7 @@ function App() {
         filters: data.filters.map((f) => f.name),
         lattitude: data.lattitude,
         longitude: data.longitude,
+        achievement_id: data.achievement_id || null
       };
 
       setMarkers((prev) => [...prev, marker]);
@@ -206,6 +240,26 @@ function App() {
       setSelectedMarker(null);
     } catch (err) {
       console.log("Error deleting marker:", err);
+    }
+  };
+
+  const toggleVisited = async (achievementId) => {
+    const token = localStorage.getItem("access_token");
+
+    const response = await fetch(`/visit/${achievementId}`, {
+      method : "POST",
+      headers:{
+        "Authorization" : `Bearer ${token}`,
+        "Content-Type" : "application/json"
+      },
+    });
+
+    if (response.ok){
+      const data = await response.json();
+      setVisitedAchievements((prev) => ({
+        ...prev,
+        [achievementId]: data.visited,
+      }));
     }
   };
 
@@ -310,6 +364,19 @@ function App() {
                   <h3>{marker.name}</h3>
                   <p>{marker.description}</p>
                   <p>{marker.filters.join(", ")}</p>
+
+                  {marker.achievement_id && (
+                  <label>
+                  <input
+                  type="checkbox"
+                  checked= {visitedAchievements[marker.achievement_id] || false}
+                  onChange={() => toggleVisited(marker.achievement_id)}
+                  />Visited?</label>
+                  )}
+
+
+
+
                   <button
                     onClick={() => {
                       removeMarker();

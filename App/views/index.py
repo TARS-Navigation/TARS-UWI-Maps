@@ -1,4 +1,4 @@
-from flask import Blueprint, redirect, render_template, request, send_from_directory, jsonify
+from flask import Blueprint, redirect, render_template, request, send_from_directory, jsonify, url_for
 from App.controllers import create_user, initialize
 
 import json, os
@@ -30,11 +30,8 @@ def index_page():
     with open(manifest_path) as f:
         manifest = json.load(f)
 
-    main_js = manifest["files"]["main.js"]
     main_css = manifest["files"]["main.css"]
-
-    main_js = "../static/frontend/build/"+ main_js
-    main_css = "../static/frontend/build/"+ main_css
+    main_js = manifest["files"]["main.js"]
     #---------------------------------------------
 
     return render_template("index.html", main_js=main_js, main_css=main_css)

@@ -13,7 +13,6 @@ import Header from "./Components/Header";
 import "./Styles/map.css";
 import { ReactComponent as MarkerIcon } from "./Icons/marker.svg";
 import { ReactComponent as FilterIcon } from "./Icons/filter.svg";
-import { marker } from "leaflet";
 
 function ClickCoordinatesHandler({ onClick }) {
   useMapEvents({
@@ -79,7 +78,7 @@ function App() {
           lattitude: marker.lattitude,
           longitude: marker.longitude,
         };
-
+        console.log(data);
         setMarkers((prev) => [...prev, newMarker]);
       });
     } catch (err) {
@@ -95,34 +94,31 @@ function App() {
   }, [isPlacingMarker]);
 
   useEffect(() => {
-    if (activeFilters.length === 0){
+    if (activeFilters.length === 0) {
       setFilteredMarkers(markers);
       return;
-    }
-    else {
+    } else {
       const filtered = markers.filter((marker) =>
         marker.filters.some((cat) => activeFilters.includes(cat))
       );
       setFilteredMarkers(filtered);
     }
-  
+
     const visibleMarkerIds = new Set();
 
     console.log(" Active Filters:", activeFilters);
 
-    
     console.log(" Custom Filter Map:", customFilterMap);
-  
-    
+
     console.log(" All Markers:", markers);
-  
+
     // Loop through all markers
     markers.forEach((marker) => {
       // If this marker has a category that is toggled on
       if (marker.filters.some((cat) => activeFilters.includes(cat))) {
         visibleMarkerIds.add(marker.id);
       }
-  
+
       // Check custom filters
       activeFilters.forEach((filter) => {
         if (customFilterMap[filter]?.includes(marker.id)) {
@@ -131,13 +127,13 @@ function App() {
       });
     });
 
-
     console.log(" Filtered Marker IDs:", [...visibleMarkerIds]);
-  
+
     // Final filtered markers
     setFilteredMarkers(markers.filter((m) => visibleMarkerIds.has(m.id)));
   }, [activeFilters, markers, customFilterMap]);
 
+  //Adds new marker to state and database
   const AddNewMarker = async (finalCategory, lattitude, longitude) => {
     try {
       const token = localStorage.getItem("access_token");
@@ -179,6 +175,7 @@ function App() {
     }
   };
 
+  //Removes Marker from State and Database
   const removeMarker = async () => {
     try {
       const token = localStorage.getItem("access_token");
@@ -232,8 +229,8 @@ function App() {
         setSelectedCategory={setSelectedCategory}
         customCategory={customCategory}
         setCustomCategory={setCustomCategory}
-        customFilterMap = {customFilterMap}
-        setCustomFilterMap = {setCustomFilterMap}
+        customFilterMap={customFilterMap}
+        setCustomFilterMap={setCustomFilterMap}
       >
         <SidebarItem
           name="Markers"
@@ -331,7 +328,5 @@ function App() {
     </div>
   );
 }
-
-
 
 export default App;

@@ -1,87 +1,115 @@
-{%extends "layout.html" %}
+{% extends "layout.html" %}
 
-{% block title %}User Achievements {% endblock %} 
-{% block page %}User Achievements {% endblock %}
+{% block title %}User Achievements{% endblock %}
+{% block page %}User Achievements{% endblock %}
 
-{% block content %}]
+{% block content %}
 
-<div class ="Temp Navbar"></div>
+<div class="navbar-placeholder"></div>
 
 <div class="achievements-container">
-    <div class="achievements-toggle">
-      <form method="GET" action="/achievements">
-        <input type="hidden" name="tab" value="unlocked">
-        <button type="submit" class="toggle-btn {% if active_tab == 'unlocked' %}active{% endif %}"><h3>{{ current_user.username }}'s Achievements</h3> Achievements</button>
-      </form>
-      <form method="GET" action="/achievements">
-        <input type="hidden" name="tab" value="locked">
-        <button type="submit" class="toggle-btn {% if active_tab == 'locked' %}active{% endif %}">Locked Achievements</button>
-      </form>
-    </div>
-  
-    <div class="achievement-section">
-      {% for ach in achievements %}
-      <div class="achievement-card {% if not ach.visited %}locked{% endif %}">
-        <img src="{{ ach.icon }}" alt="Achievement Icon">
-        <div class="achievement-text">
-          <h4>{{ ach.name }}</h4>
-          <p>{{ ach.description }}</p>
-        </div>
-      </div>
-      {% endfor %}
-    </div>
+
+  <div class="achievements-toggle">
+    <form method="GET" action="/achievements">
+      <input type="hidden" name="tab" value="unlocked">
+      <button type="submit" class="toggle-btn {% if active_tab == 'unlocked' %}active{% endif %}">
+        <h3>{{ current_user.username }}'s Achievements</h3> Achievements
+      </button>
+    </form>
+    <form method="GET" action="/achievements">
+      <input type="hidden" name="tab" value="locked">
+      <button type="submit" class="toggle-btn {% if active_tab == 'locked' %}active{% endif %}">
+        Locked Achievements
+      </button>
+    </form>
   </div>
 
 
-  <!-- Temporary lol -->
-  <style>
-    .navbar-placeholder {
-      height: 80px;
-      background-color: #aef9f9;
-      margin-bottom: 10px;
-    }
-    .achievements-container {
-      border: 5px solid red;
-      padding: 20px;
-    }
-    .achievements-toggle {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-bottom: 20px;
-    }
-    .toggle-btn {
-      font-weight: bold;
-      border: 3px solid red;
-      border-radius: 30px;
-      padding: 10px 20px;
-      background-color: white;
-      text-decoration: none;
-      color: black;
-      cursor: pointer;
-    }
-    .toggle-btn.active {
-      background-color: #ffdddd;
-      border-color: darkred;
-    }
-    .achievement-card {
-      border: 5px solid #3729d3;
-      display: flex;
-      align-items: center;
-      padding: 10px;
-      margin-bottom: 15px;
-    }
-    .achievement-card img {
-      height: 60px;
-      width: 60px;
-      margin-right: 20px;
-      border: 3px solid #8e49dc;
-    }
-    .locked {
-      opacity: 0.4;
-    }
-  </style>
-  
+  <div class="achievement-section">
+    <p>Total Achievements: {{ achievements|length }}</p>
 
+    {% if achievements|length == 0 %}
+      <p>No achievements to show in this tab.</p>
+    {% endif %}
+
+    {% for ach in achievements %}
+    <div class="achievement-card {% if not ach.visited %}locked{% endif %}">
+      <img src="{{ ach.icon or '/static/images/achievement-default.jpg' }}" alt="Achievement Icon">
+      <div class="achievement-text">
+        <h4>{{ ach.name }}</h4>
+        <p>{{ ach.description }}</p>
+        <p>Status: {% if ach.visited %}<strong>Visited</strong>{% else %}Not Visited{% endif %}</p>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Styling -->
+<style>
+  .navbar-placeholder {
+    height: 80px;
+    background-color: #aef9f9;
+    margin-bottom: 10px;
+  }
+
+  .achievements-container {
+    border: 5px solid red;
+    padding: 20px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .achievements-toggle {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+
+  .toggle-btn {
+    font-weight: bold;
+    border: 3px solid red;
+    border-radius: 30px;
+    padding: 10px 20px;
+    background-color: white;
+    color: black;
+    cursor: pointer;
+  }
+
+  .toggle-btn.active {
+    background-color: #ffdddd;
+    border-color: darkred;
+  }
+
+  .achievement-section {
+    text-align: center;
+  }
+
+  .achievement-card {
+    border: 5px solid #3729d3;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin: 15px auto;
+    max-width: 700px;
+    background-color: white;
+  }
+
+  .achievement-card img {
+    height: 60px;
+    width: 60px;
+    margin-right: 20px;
+    border: 3px solid #8e49dc;
+  }
+
+  .achievement-text {
+    text-align: left;
+  }
+
+  .locked {
+    opacity: 0.4;
+  }
+</style>
 
 {% endblock %}

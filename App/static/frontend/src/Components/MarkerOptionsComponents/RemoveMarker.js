@@ -1,6 +1,6 @@
 import React  from "react";
 
-import "../../Styles/marker_options.css";
+import "../../Styles/remove_marker.css";
 
 
 export default function RemoveMarker(props) {
@@ -37,9 +37,9 @@ export default function RemoveMarker(props) {
         {props.selectedMarker && (!props.selectedMarker.is_global || props.userPermissions) ?(
           <>
             <div className="marker-details">
-              <h3>{props.selectedMarker.name}</h3>
-              <p>{props.selectedMarker.description}</p>
-              <p>{props.selectedMarker.filters}</p>
+              <p><strong>Name:</strong> {props.selectedMarker.name}</p>
+              <p><strong>Description:</strong> {props.selectedMarker.description}</p>
+              <p><strong>Categories:</strong> {props.selectedMarker.filters.join(", ")}</p>
             </div>
             <button onClick={removeMarker}>Remove Marker</button>
           </>

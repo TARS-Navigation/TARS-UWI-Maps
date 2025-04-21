@@ -1,2 +1,88 @@
 /* css for remove marker option goes here */
-
+/* --- Container Base Styles --- */
+.marker-options-contianer {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 340px;
+    padding: 2rem;
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(6px);
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  /* --- Marker Remove Section --- */
+  .marker-remove {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .marker-remove h2 {
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: inherit;
+  }
+  
+  .marker-remove p {
+    font-size: 1rem;
+    color: inherit;
+  }
+  
+  /* --- Selected Marker Details --- */
+  .marker-details {
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid #aacbb3;
+    border-radius: 12px;
+    padding: 1rem;
+    font-size: 1rem;
+    color: inherit;
+  }
+  
+  /* --- Button Styling --- */
+  .marker-remove button {
+    padding: 0.9rem 2.5rem;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 999px;
+    border: none;
+    background-color: #7cd8a0;
+    color: white;
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .marker-remove button:hover {
+    background-color: #69c08c;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  }
+  
+  .marker-remove button:active {
+    transform: scale(0.96);
+  }
+  
+  /* --- Light Theme --- */
+  body.light .marker-options-contianer {
+    background-color: rgba(199, 192, 128, 0.308);
+    color: #f3eded;
+  }
+  
+  body.light .marker-details {
+    background-color: rgba(149, 228, 211, 0.3);
+    border: 1px solid #aacbb3;
+  }
+  
+  /* --- Dark Theme --- */
+  body.dark .marker-options-contianer {
+    background-color: rgba(40, 60, 50, 0.6);
+    color: #f1f1f1;
+  }
+  
+  body.dark .marker-details {
+    background-color: rgba(46, 60, 52, 0.6);
+    border: 1px solid #6e8c7d;
+  }
+  

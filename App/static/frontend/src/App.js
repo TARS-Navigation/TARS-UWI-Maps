@@ -71,6 +71,7 @@ function App() {
   const [filters, setFilters] = useState([]);
   const [baseFilters, setBaseFilters] = useState([]);
   const [filterMap, setFilterMap] = useState({});
+  const [visitedAchievements, setVisitedAchievements] = useState({});
   const [activeFilters, setActiveFilters] = useState([]);
 
   //These states are managed by AddMarker form
@@ -101,6 +102,8 @@ function App() {
           lattitude: marker.lattitude,
           longitude: marker.longitude,
           is_global: marker.is_global,
+          achievement_id: marker.achievement_id || null
+
         };
         setMarkers((prev) => [...prev, newMarker]);
       });
@@ -146,7 +149,36 @@ function App() {
     getAllFilters();
   }, []);
 
-  //Changes Cusor if Placing Marker
+  useEffect(() => {
+    const loadVisitedAchievements = async () => {
+      try {
+        const token = localStorage.getItem("access_token");
+        const response = await fetch("/api/visited-achievements", {
+          method: "GET",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+        });
+  
+        if (response.ok) {
+          const data = await response.json(); 
+          const visitedMap = {};
+          data.forEach((id) => {
+            visitedMap[id] = true;
+          });
+          setVisitedAchievements(visitedMap); 
+        }
+      } catch (err) {
+        console.log("Error loading visited achievements:", err);
+      }
+    };
+  
+    loadVisitedAchievements();
+  }, []);
+
+
+//Changes Cusor if Placing Marker
   useEffect(() => {
     const mapContainer = document.getElementById("map");
     if (mapContainer) {
@@ -229,7 +261,9 @@ function App() {
         icon: data.icon,
         lattitude: data.lattitude,
         longitude: data.longitude,
-        is_global: data.is_global
+        is_global: data.is_global,
+        achievement_id: data.achievement_id || null
+
       };
 
       setMarkers((prev) => [...prev, marker]);
@@ -299,6 +333,27 @@ function App() {
       )
     );
   };
+  
+  const toggleVisited = async (achievementId) => {
+    const token = localStorage.getItem("access_token");
+
+    const response = await fetch(`/visit/${achievementId}`, {
+      method : "POST",
+      headers:{
+        "Authorization" : `Bearer ${token}`,
+        "Content-Type" : "application/json"
+      },
+    });
+
+    if (response.ok){
+      const data = await response.json();
+      setVisitedAchievements((prev) => ({
+        ...prev,
+        [achievementId]: data.visited,
+      }));
+    }
+  };
+
   const iconNames = [
     "redmarker",
     "blackmarker",
@@ -435,7 +490,20 @@ function App() {
                   )}
                   <p>{marker.description}</p>
                   <p>{marker.filters.join(", ")}</p>
-                  {userPermissions === true ? (
+
+                  {marker.achievement_id && (
+                  <label>
+                  <input
+                  type="checkbox"
+                  checked= {visitedAchievements[marker.achievement_id] || false}
+                  onChange={() => toggleVisited(marker.achievement_id)}
+                  />Visited?</label>
+                  )}
+
+
+
+
+                   {userPermissions === true ? (
                     <button
                       onClick={() => {
                         removeMarker();

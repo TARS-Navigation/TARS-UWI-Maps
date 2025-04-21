@@ -1,6 +1,7 @@
 from .user import create_user
-from App.models import Admin, Marker, Filter
+from App.models import Admin, Marker, Filter,  RegularUser
 from App.database import db
+from App.models import Achievement
 
 def initialize():
     db.drop_all()
@@ -8,6 +9,11 @@ def initialize():
     # Create admin user
     admin = Admin(username='bob', password='bobpass') # login admin using bob and bobpass
     admin.admin_id = 1  #  admin ID
+
+
+    test = RegularUser(username='richard', password='test')
+    db.session.add(test)
+
 
     filter1 = Filter(creator_id= None, name = "Science and Technology", is_global=True)
     filter2 = Filter(creator_id= None, name = "Social Sciences", is_global=True)
@@ -33,4 +39,24 @@ def initialize():
 
     db.session.add_all(markers)
     db.session.add(admin)
+    db.session.commit()
+
+    achievement1 = Achievement(
+        name="Studious",
+        description="Visited marker1",
+        icon="/static/images/achievement-default.jpg",
+        marker_id=marker1.id
+    )
+
+    
+    achievement2 = Achievement(
+        name="Venturer",
+        description="Visited marker 2",
+        icon="/static/images/achievement-default.jpg",
+        marker_id=marker2.id
+    )
+
+    db.session.add_all([achievement1, achievement2])
+
+
     db.session.commit()

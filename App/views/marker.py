@@ -3,7 +3,7 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from App.controllers.marker import *
 
 
-marker_views = Blueprint('marker_views', _name_)
+marker_views = Blueprint('marker_views', __name__)
 
 @marker_views.route('/markers', methods=['GET'])
 @jwt_required()

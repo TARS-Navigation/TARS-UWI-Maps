@@ -102,7 +102,7 @@ export function SidebarItem(props) {
   return (
     <>
       <button
-        className="ui-sidebar-button"
+        className={`ui-sidebar-button ${isOpen ? "glow-active" : ""}`}
         id={props.name}
         onClick={() => {
           setIsOpen(!isOpen);
@@ -112,11 +112,13 @@ export function SidebarItem(props) {
         {props.name !== "Achievements" ? (
           <div className="sidebar-button-content">
             <div className="sidebar-icon">{props.icon}</div>
-            <div className="siderbar-name">{props.name}</div>
+            <div className="sidebar-name">{props.name}</div>
             <div className="sidebar-arrow">{isOpen ? "▼" : "▶"}</div>
           </div>
         ) : (
-          <div>{props.name}</div>
+          <div className="sidebar-button-content">
+            <div className="sidebar-name">{props.name}</div>
+          </div>
         )}
       </button>
 

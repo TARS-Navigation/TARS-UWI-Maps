@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import "../../Styles/marker_options.css";
+import "../../Styles/update_marker.css";
 
 export default function UpdateMarker(props) {
   const [selectedCategories, setSelectedCategories] = useState([]);

@@ -55,6 +55,7 @@ export default function EditFilter(props) {
         newMap[data.name] = data.id;
         return newMap;
       });
+      alert("Filter Updated!");
     } catch (err) {
       console.log("Error loading Filter:", err);
     }

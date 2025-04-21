@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import "../../Styles/filter_options.css";
+import "../../Styles/add_custom_filter.css";
 
 export default function AddCustomFilter(props) {
   const [title, setTitle] = useState("");
@@ -28,6 +29,7 @@ export default function AddCustomFilter(props) {
 
     setTitle("");
     setSelectedMarkerIds([]);
+    alert("Filter Saved!");
   };
 
   return (
@@ -42,20 +44,23 @@ export default function AddCustomFilter(props) {
       />
 
       <label>Select Markers you want: </label>
-      <ul>
+      <div className="available-marker-container">
         {props.markers.map((marker) => (
-          <li key={marker.id}>
-            <label>
+            <div className="marker-item">
               <input
                 type="checkbox"
                 checked={selectedMarkerIds.includes(marker.id)}
                 onChange={() => handleMarkerToggle(marker.id)}
+                className="marker-item-input"
               />
-              {marker.name}
-            </label>
-          </li>
+              <img
+                className="marker-item-icon"
+                src={`${require(`../../Icons/${marker.icon}.png`)}`}
+              />
+              <div className="marker-item-name">{marker.name}</div>
+            </div>
         ))}
-      </ul>
+      </div>
 
       <button onClick={handleSave}> Save Filter</button>
     </div>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import "../../Styles/filter_options.css";
-
+import "../../Styles/toggle_filter.css";
 
 export default function ToggleFilter(props) {
   const handleFilterChange = (e) => {
@@ -14,21 +14,20 @@ export default function ToggleFilter(props) {
 
   return (
     <div>
-      <ul className="filter-list-2">
+      <div className="filter-list-2">
         {props.filters.map((filter) => (
-          <li key={filter} className="filter-item-2">
-            <label>
-              <input
-                type="checkbox"
-                value={filter}
-                checked={props.activeFilters.includes(filter)}
-                onChange={handleFilterChange}
-              />
-              {filter}
-            </label>
-          </li>
+          <div className="filter-item">
+            <input
+              type="checkbox"
+              className="filter-icon-input"
+              value={filter}
+              checked={props.activeFilters.includes(filter)}
+              onChange={handleFilterChange}
+            />
+            <div className="filter-item-name">{filter}</div>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

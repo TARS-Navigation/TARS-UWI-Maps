@@ -1,0 +1,5 @@
+.filter-list-2{
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}

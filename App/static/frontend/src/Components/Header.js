@@ -46,7 +46,6 @@ export default function Header() {
       
       <div className="header-side right">
         {user ? <button onClick={logout}> {user} Logout</button> : <button>Sign in</button>}
-        <button>Logout</button>
       </div>
     </div>
   );

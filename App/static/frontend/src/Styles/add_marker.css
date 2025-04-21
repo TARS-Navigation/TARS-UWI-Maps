@@ -152,7 +152,7 @@
   body.light #custom-category,
   body.light #marker-category {
     background-color: #95e4d348;
-    color: #ffffff;
+    color: #fcfcfc;
     border: 1px solid #aacbb3;
   }
   
@@ -174,7 +174,12 @@
     background-color: #4b9167;
   }
   
-  
+  /* trying to fix dropdown*/
+  body.light select,body.light #marker-category {
+    background-color: #d3f7e6 !important;  /* Soft minty background */
+    color: #0b3d2f !important;             /* Dark text for readability */
+    border: 1px solid #6ea996;
+}
   /* --- Theme: Dark --- */
   body.dark .marker-options-contianer {
     background-color: rgba(40, 60, 50, 0.6);

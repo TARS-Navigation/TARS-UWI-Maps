@@ -248,7 +248,6 @@ function App() {
     }
   };
 
-<<<<<<< HEAD
   const toggleVisited = async (achievementId) => {
     const token = localStorage.getItem("access_token");
 
@@ -269,7 +268,6 @@ function App() {
     }
   };
 
-=======
   const iconNames = [
     "redmarker",
     "blackmarker",
@@ -298,7 +296,6 @@ function App() {
   }, {});
 
   console.log(icons);
->>>>>>> origin/main
   return (
     <div className="ui-container">
       <Header />

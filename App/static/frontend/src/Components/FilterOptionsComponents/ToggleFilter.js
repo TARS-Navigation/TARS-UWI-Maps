@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import "../Styles/filter_options.css";
+import "../../Styles/filter_options.css";
 
 
 export default function ToggleFilter(props) {

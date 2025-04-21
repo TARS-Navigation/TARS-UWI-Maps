@@ -45,12 +45,13 @@ export function Sidebar(props) {
         }`}
       >
         <button
+          className="back-button"
           onClick={() => {
             setPrevOption(props.activeOption);
             props.changeActiveOption(null);
           }}
         >
-          back
+          <img src= {require(`../Icons/turn-back.png`)}/>
         </button>
         {/* 
           This is where the dropdown option's component will be rendered, so the form for the 'Add Marker' 

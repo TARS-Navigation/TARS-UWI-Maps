@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import "../Styles/filter_options.css";
+import "../../Styles/filter_options.css";
 
 export default function EditFilter(props) {
   const [selectedFilter, setSelectedFilter] = useState(null);
@@ -118,7 +118,7 @@ export default function EditFilter(props) {
                 <div className="marker-item">
                   <img
                     className="marker-item-icon"
-                    src={`${require(`../Icons/${marker.icon}.png`)}`}
+                    src={`${require(`../../Icons/${marker.icon}.png`)}`}
                   />
                   <div className="marker-item-name">{marker.name}</div>
                   <div
@@ -140,7 +140,7 @@ export default function EditFilter(props) {
                 <div className="marker-item">
                   <img
                     className="marker-item-icon"
-                    src={`${require(`../Icons/${marker.icon}.png`)}`}
+                    src={`${require(`../../Icons/${marker.icon}.png`)}`}
                   />
                   <div className="marker-item-name">{marker.name}</div>
                   <div

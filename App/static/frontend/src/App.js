@@ -95,7 +95,10 @@ function App() {
   }, [isPlacingMarker]);
 
   useEffect(() => {
-    if (activeFilters.length === 0) setFilteredMarkers(markers);
+    if (activeFilters.length === 0){
+      setFilteredMarkers(markers);
+      return;
+    }
     else {
       const filtered = markers.filter((marker) =>
         marker.filters.some((cat) => activeFilters.includes(cat))
@@ -105,8 +108,6 @@ function App() {
   
     const visibleMarkerIds = new Set();
 
-
-
     console.log(" Active Filters:", activeFilters);
 
     
@@ -115,13 +116,10 @@ function App() {
     
     console.log(" All Markers:", markers);
   
-
-
-  
     // Loop through all markers
     markers.forEach((marker) => {
       // If this marker has a category that is toggled on
-      if (marker.categories.some((cat) => activeFilters.includes(cat))) {
+      if (marker.filters.some((cat) => activeFilters.includes(cat))) {
         visibleMarkerIds.add(marker.id);
       }
   

@@ -8,7 +8,7 @@ class Filter(db.Model):
 
     creator = db.relationship('User', backref = 'filters')
 
-    def _init_(self, creator_id, name, is_global):
+    def __init__(self, creator_id, name, is_global):
         self.creator_id = creator_id
         self.name = name
         self.is_global = is_global

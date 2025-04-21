@@ -9,7 +9,7 @@ class User(db.Model):
     type = db.Column(db.String(50))
     _mapper_args_ = {'polymorphic_identity': 'user', 'polymorphic_on': type}
 
-    def _init_(self, username, password):
+    def __init__(self, username, password):
         self.username = username
         self.set_password(password)
 

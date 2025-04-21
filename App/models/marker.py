@@ -14,7 +14,7 @@ class Marker(db.Model):
     creator = db.relationship('User', backref = 'markers')
     filters = db.relationship('Filter', secondary = "marker_filter", backref = 'markers', lazy = True)
 
-    def _init_(self, name, creator_id, parent_id, lattitude, longitude, description, icon, is_global):
+    def __init__(self, name, creator_id, parent_id, lattitude, longitude, description, icon, is_global):
         self.creator_id = creator_id
         self.name = name
         self.parent_id = parent_id

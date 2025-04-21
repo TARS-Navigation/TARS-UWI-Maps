@@ -34,7 +34,7 @@ export default function RemoveMarker(props) {
         <h2>Remove Marker</h2>
         <p>Click on the marker you want to remove.</p>
         <h2>Selected Marker: </h2>
-        {props.selectedMarker && (props.selectedMarker.is_global && props.userPermissions) ?(
+        {props.selectedMarker && (!props.selectedMarker.is_global || props.userPermissions) ?(
           <>
             <div className="marker-details">
               <h3>{props.selectedMarker.name}</h3>

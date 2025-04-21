@@ -102,8 +102,7 @@ function App() {
           lattitude: marker.lattitude,
           longitude: marker.longitude,
           is_global: marker.is_global,
-          achievement_id: marker.achievement_id || null
-
+          achievement_id: marker.achievement_id || null,
         };
         setMarkers((prev) => [...prev, newMarker]);
       });
@@ -156,29 +155,28 @@ function App() {
         const response = await fetch("/api/visited-achievements", {
           method: "GET",
           headers: {
-            "Authorization": `Bearer ${token}`,
+            Authorization: `Bearer ${token}`,
             "Content-Type": "application/json",
           },
         });
-  
+
         if (response.ok) {
-          const data = await response.json(); 
+          const data = await response.json();
           const visitedMap = {};
           data.forEach((id) => {
             visitedMap[id] = true;
           });
-          setVisitedAchievements(visitedMap); 
+          setVisitedAchievements(visitedMap);
         }
       } catch (err) {
         console.log("Error loading visited achievements:", err);
       }
     };
-  
+
     loadVisitedAchievements();
   }, []);
 
-
-//Changes Cusor if Placing Marker
+  //Changes Cusor if Placing Marker
   useEffect(() => {
     const mapContainer = document.getElementById("map");
     if (mapContainer) {
@@ -262,8 +260,7 @@ function App() {
         lattitude: data.lattitude,
         longitude: data.longitude,
         is_global: data.is_global,
-        achievement_id: data.achievement_id || null
-
+        achievement_id: data.achievement_id || null,
       };
 
       setMarkers((prev) => [...prev, marker]);
@@ -333,19 +330,19 @@ function App() {
       )
     );
   };
-  
+
   const toggleVisited = async (achievementId) => {
     const token = localStorage.getItem("access_token");
 
     const response = await fetch(`/visit/${achievementId}`, {
-      method : "POST",
-      headers:{
-        "Authorization" : `Bearer ${token}`,
-        "Content-Type" : "application/json"
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
     });
 
-    if (response.ok){
+    if (response.ok) {
       const data = await response.json();
       setVisitedAchievements((prev) => ({
         ...prev,
@@ -369,6 +366,7 @@ function App() {
     "sport1",
     "sport2",
     "yellowmarker",
+    "appartment"
   ];
 
   const icons = iconNames.reduce((acc, name) => {
@@ -484,7 +482,10 @@ function App() {
               <Popup>
                 <div className="marker-popup">
                   {marker.is_global && !userPermissions ? (
-                    <h3>{marker.name} created by admin</h3>
+                    <>
+                      <h3>{marker.name}</h3>
+                      <p>Created by admin</p>
+                    </>
                   ) : (
                     <h3>{marker.name}</h3>
                   )}
@@ -492,18 +493,19 @@ function App() {
                   <p>{marker.filters.join(", ")}</p>
 
                   {marker.achievement_id && (
-                  <label>
-                  <input
-                  type="checkbox"
-                  checked= {visitedAchievements[marker.achievement_id] || false}
-                  onChange={() => toggleVisited(marker.achievement_id)}
-                  />Visited?</label>
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={
+                          visitedAchievements[marker.achievement_id] || false
+                        }
+                        onChange={() => toggleVisited(marker.achievement_id)}
+                      />
+                      Visited?
+                    </label>
                   )}
 
-
-
-
-                   {userPermissions === true ? (
+                  {!marker.is_global || userPermissions === true ? (
                     <button
                       onClick={() => {
                         removeMarker();

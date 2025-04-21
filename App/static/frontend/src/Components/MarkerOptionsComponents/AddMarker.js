@@ -23,6 +23,7 @@ export default function AddMarker(props) {
     "sport1",
     "sport2",
     "yellowmarker",
+    "appartment"
   ];
 
   const changeSelectedCategories = () => {

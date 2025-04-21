@@ -21,6 +21,7 @@ export default function UpdateMarker(props) {
     "sport1",
     "sport2",
     "yellowmarker",
+    "appartment"
   ];
 
   const changeSelectedCategories = () => {
@@ -125,7 +126,7 @@ export default function UpdateMarker(props) {
     <div className="marker-options-contianer">
       <h2>Update Marker</h2>
       <h4>Select a Marker to be updated</h4>
-      {props.selectedMarker && (
+      {props.selectedMarker && (!props.selectedMarker.is_global || props.userPermission) ?(
         <form className="marker-options-form" onSubmit={updateMarker}>
           <h3>Selected Marker</h3>
 
@@ -223,7 +224,7 @@ export default function UpdateMarker(props) {
 
           <button type="submit">Update Marker</button>
         </form>
-      )}
+      ): <div>Can not edit this Marker</div>}
     </div>
   );
 }

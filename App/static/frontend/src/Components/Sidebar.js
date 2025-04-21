@@ -3,7 +3,9 @@ import AddMarker from "./MarkerOptionsComponents/AddMarker";
 import RemoveMarker from "./MarkerOptionsComponents/RemoveMarker";
 import ViewMarkers from "./MarkerOptionsComponents/ViewMarkers";
 import UpdateMarker from "./MarkerOptionsComponents/UpdateMarker";
-import { EditFilter, ToggleFilter, AddCustomFilter } from "./FilterOptions";
+import ToggleFilter from "./FilterOptionsComponents/ToggleFilter";
+import EditFilter from "./FilterOptionsComponents/EditFilter";
+import AddCustomFilter from "./FilterOptionsComponents/AddCustomFilter"
 
 import "../Styles/sidebar.css";
 

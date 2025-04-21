@@ -7,12 +7,12 @@ export default function ViewMarkers(props) {
     <div className="marker-options-contianer">
       <div className="marker-view">
         <h2>View Markers</h2>
-        <ul className="marker-list">
+        <ul className="marker-list-vertical">
           {props.markers.map((marker, index) => (
-            <li key={index} className="marker-item">
-              <h3>{marker.name}</h3>
-              <p>{marker.description}</p>
-              <p>{marker.filters}</p>
+            <li key={index} className="marker-item-vertical">
+              <p><strong>Name:</strong> {marker.name}</p>
+              <p><strong>Description:</strong> {marker.description}</p>
+              <p><strong>Categories:</strong> {Array.isArray(marker.filters) ? marker.filters.join(", ") : marker.filters}</p>
             </li>
           ))}
         </ul>

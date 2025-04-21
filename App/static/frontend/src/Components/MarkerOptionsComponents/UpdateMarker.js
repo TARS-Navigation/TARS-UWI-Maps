@@ -133,6 +133,7 @@ export default function UpdateMarker(props) {
           <input
             type="text"
             id="marker-name"
+            className="marker-name-input-field"
             name="name"
             value={formData.name}
             onChange={handleChange}
@@ -143,6 +144,7 @@ export default function UpdateMarker(props) {
           <textarea
             id="marker-description"
             name="description"
+            className="marker-description-input-field"
             value={formData.description}
             onChange={handleChange}
             required
@@ -193,6 +195,7 @@ export default function UpdateMarker(props) {
               type="text"
               id="custom-category"
               name="custom-category"
+              className="marker-name-input-field"
               placeholder="Custom category"
             />
             <div className="category-add-button" onClick={addCustomCategory}>

@@ -7,7 +7,7 @@ import {
   Popup,
 } from "react-leaflet";
 import { useMapEvents } from "react-leaflet";
-import { Icon } from "leaflet";
+import L from "leaflet";
 import { Sidebar, SidebarItem } from "./Components/Sidebar";
 import Header from "./Components/Header";
 
@@ -58,8 +58,8 @@ function App() {
     filters: [],
     icon: "",
   });
-  const [markerIcons, setMarkerIcons] = useState([]);
   const [selectedMarker, setSelectedMarker] = useState(null);
+  const [hoverMarker, setHoveredMarker] = useState(null);
   const [filterMarkers, setFilteredMarkers] = useState([]);
   const [isPlacingMarker, setIsPlacingMarker] = useState(false);
 
@@ -366,12 +366,13 @@ function App() {
     "sport1",
     "sport2",
     "yellowmarker",
-    "appartment"
+    "appartment",
   ];
 
   const icons = iconNames.reduce((acc, name) => {
-    acc[name] = new Icon({
-      iconUrl: require(`./Icons/${name}.png`),
+    acc[name] = new L.divIcon({
+      className: `ui-marker`,
+      html: `<div class="marker-wrapper"><img src=${require(`./Icons/${name}.png`)} alt="${name}" /></div>`,
       iconSize: [38, 38],
       iconAnchor: [19, 38],
       popupAnchor: [0, -38],
@@ -471,12 +472,19 @@ function App() {
             <Marker
               key={marker.id}
               position={[marker.lattitude, marker.longitude]}
-              icon={icons[marker.icon]}
+              icon={L.divIcon({
+                ...icons[marker.icon].options,
+                className: `ui-marker ${
+                  hoverMarker === marker.id ? "hovered" : ""
+                } ${selectedMarker?.id === marker.id ? "selected" : ""}`,
+              })}
               eventHandlers={{
                 click: () =>
                   setSelectedMarker(
                     markers.find((obj) => obj.id === marker.id)
                   ),
+                mouseover: () => setHoveredMarker(marker.id),
+                mouseout: () => setHoveredMarker(null),
               }}
             >
               <Popup>

@@ -1,17 +1,20 @@
 import React from "react";
 import ModeToggle from "./ModeToggle";
-import { useState, useEffect } from "react";
+import {  useEffect } from "react";
 import "../Styles/header.css";
 
 export default function Header() {
   const [user, setUser] = React.useState(null);
 
-  useEffect(async () => {
-    let data = await localStorage.getItem("user");
-    console.log(data);
-    if (data) {
-      setUser(data);
+  useEffect(() => {
+    async function fetchData(){
+      let data = await localStorage.getItem("user");
+      if (data) {
+        setUser(data);
+      }
     }
+
+    fetchData();
   }, []);
 
   const logout = async () => {

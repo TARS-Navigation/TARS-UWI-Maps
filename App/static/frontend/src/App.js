@@ -142,10 +142,14 @@ function App() {
   };
 
   //Load in all Database Variables
-  useEffect(async () => {
-    getUserPermissions();
-    getAllMarkers();
-    getAllFilters();
+  useEffect(() => {
+    async function fetchData(){
+      getUserPermissions();
+      getAllMarkers();
+      getAllFilters();
+    }
+
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -266,7 +270,7 @@ function App() {
   const removeMarker = async () => {
     try {
       const token = localStorage.getItem("access_token");
-      const response = await fetch(`/markers/${selectedMarker.id}`, {
+       await fetch(`/markers/${selectedMarker.id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -447,9 +451,9 @@ function App() {
             onClick={({ lat, lng }) => {
               if (isPlacingMarker) {
                 if (markerDetails.filters) {
-                  markerDetails.filters.map((filter) => {
+                  markerDetails.filters.forEach((filter) => {
                     if (!filters.includes(filter))
-                      setFilters((prev) => [...prev, filter]);
+                       setFilters((prev) => [...prev, filter]);
                   });
                 }
 

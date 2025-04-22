@@ -51,7 +51,7 @@ export function Sidebar(props) {
             props.changeActiveOption(null);
           }}
         >
-          <img src= {require(`../Icons/turn-back.png`)}/>
+          <img src= {require(`../Icons/turn-back.png`)} alt="icon"/>
         </button>
         {/* 
           This is where the dropdown option's component will be rendered, so the form for the 'Add Marker' 

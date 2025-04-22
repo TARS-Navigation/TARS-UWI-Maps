@@ -67,7 +67,7 @@ export default function EditFilter(props) {
 
   const removeFilterMarker = (marker) => {
     setFilterMarkers((prev) => 
-      prev.filter((m) => m.id != marker.id)
+      prev.filter((m) => m.id !== marker.id)
     );
   };
 
@@ -123,6 +123,7 @@ export default function EditFilter(props) {
                   <img
                     className="marker-item-icon"
                     src={`${require(`../../Icons/${marker.icon}.png`)}`}
+                    alt="icon"
                   />
                   <div className="marker-item-name">{marker.name}</div>
                   <div
@@ -146,6 +147,7 @@ export default function EditFilter(props) {
                   <img
                     className="marker-item-icon"
                     src={`${require(`../../Icons/${marker.icon}.png`)}`}
+                    alt="icon"
                   />
                   <div className="marker-item-name">{marker.name}</div>
                   <div

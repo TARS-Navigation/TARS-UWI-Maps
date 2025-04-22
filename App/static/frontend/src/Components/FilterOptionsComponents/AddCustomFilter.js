@@ -110,6 +110,7 @@ export default function AddCustomFilter(props) {
             <img
               className="marker-item-icon"
               src={`${require(`../../Icons/${marker.icon}.png`)}`}
+              alt="ok"
             />
             <div className="marker-item-name">{marker.name}</div>
           </div>

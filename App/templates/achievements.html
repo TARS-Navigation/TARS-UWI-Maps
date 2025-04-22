@@ -1,3 +1,4 @@
+<!-- achievements.html -->
 {% extends "layout.html" %}
 
 {% block title %}User Achievements{% endblock %}
@@ -5,10 +6,40 @@
 
 {% block content %}
 
-<div class="navbar-placeholder"></div>
+<div class="background-overlay"></div>
 
+<!-- Navbar -->
+<div class="navbar-placeholder">
+  <a href="/app" class="logo-link" title="Go Back">
+    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="TARS Logo" class="logo-image"> 
+  </a>
+  <div class="navbar-title">TARS-MAPS UWI STA</div>
+  <div class="header-side right">
+    {% if current_user %}
+      <button onclick="logout()" class="logout-btn">{{ current_user.username }} Logout</button>
+    {% else %}
+      <button onclick="window.location.href='/'" class="signin-btn">Sign in</button>
+    {% endif %}
+  </div>
+</div>
+
+<script>
+async function logout() {
+  try {
+    const response = await fetch("/logout", {
+      method: "GET",
+      credentials: "include"
+    });
+    localStorage.removeItem("user");
+    window.location.href = "/";
+  } catch (err) {
+    console.error("Logout error:", err);
+  }
+}
+</script>
+
+<!-- Achievements Section -->
 <div class="achievements-container">
-
   <div class="achievements-toggle">
     <form method="GET" action="/achievements">
       <input type="hidden" name="tab" value="unlocked">
@@ -23,7 +54,6 @@
       </button>
     </form>
   </div>
-
 
   <div class="achievement-section">
     <p>Total Achievements: {{ achievements|length }}</p>
@@ -45,71 +75,6 @@
   </div>
 </div>
 
-<!-- Styling -->
-<style>
-  .navbar-placeholder {
-    height: 80px;
-    background-color: #aef9f9;
-    margin-bottom: 10px;
-  }
-
-  .achievements-container {
-    border: 5px solid red;
-    padding: 20px;
-    max-width: 900px;
-    margin: 0 auto;
-  }
-
-  .achievements-toggle {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-bottom: 20px;
-  }
-
-  .toggle-btn {
-    font-weight: bold;
-    border: 3px solid red;
-    border-radius: 30px;
-    padding: 10px 20px;
-    background-color: white;
-    color: black;
-    cursor: pointer;
-  }
-
-  .toggle-btn.active {
-    background-color: #ffdddd;
-    border-color: darkred;
-  }
-
-  .achievement-section {
-    text-align: center;
-  }
-
-  .achievement-card {
-    border: 5px solid #3729d3;
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    margin: 15px auto;
-    max-width: 700px;
-    background-color: white;
-  }
-
-  .achievement-card img {
-    height: 60px;
-    width: 60px;
-    margin-right: 20px;
-    border: 3px solid #8e49dc;
-  }
-
-  .achievement-text {
-    text-align: left;
-  }
-
-  .locked {
-    opacity: 0.4;
-  }
-</style>
+<link rel="stylesheet" href="{{ url_for('static', filename='styles/achievements.css') }}">
 
 {% endblock %}

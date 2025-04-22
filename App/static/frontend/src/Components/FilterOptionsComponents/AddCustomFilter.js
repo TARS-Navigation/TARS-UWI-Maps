@@ -13,18 +13,72 @@ export default function AddCustomFilter(props) {
     );
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!title.trim()) return;
 
-    if (!props.filters.includes(title)) {
-      props.setFilters((prev) => [...prev, title]);
-    }
+    try {
+      const token = localStorage.getItem("access_token");
+      const newFilter = {
+        name: title,
+        marker_ids: selectedMarkerIds,
+      };
+      
 
-    if (props.setCustomFilterMap) {
-      props.setCustomFilterMap((prev) => ({
-        ...prev,
-        [title]: selectedMarkerIds,
-      }));
+      if (!props.filters.includes(title)) {
+        props.setFilters((prev) => [...prev, title]);
+        const response = await fetch("/filters", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          credentials: "include",
+          body: JSON.stringify(newFilter),
+        });
+        const data = await response.json();
+        console.log(data);
+
+        props.setFilterMap((prev) => {
+          const newMap = { ...prev };
+          newMap[data.name] = data.id;
+          return newMap;
+        });
+
+        if (props.setCustomFilterMap) {
+          props.setCustomFilterMap((prev) => ({
+            ...prev,
+            [title]: selectedMarkerIds,
+          }));
+        }
+      } else {
+        const response = await fetch(`/filters/${props.filterMap[title]}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          credentials: "include",
+          body: JSON.stringify(newFilter),
+        });
+        const data = await response.json();
+        console.log(data);
+
+        props.setFilterMap((prev)=>{
+          const newMap ={...prev};
+          delete newMap[title];
+          newMap[data.name] = data.id;
+          return newMap;
+        });
+
+        if (props.setCustomFilterMap) {
+          props.setCustomFilterMap((prev) => ({
+            ...prev,
+            [title]: selectedMarkerIds,
+          }));
+        }
+      }
+    } catch (err) {
+      console.log("Error adding Filters:", err);
     }
 
     setTitle("");
@@ -46,19 +100,19 @@ export default function AddCustomFilter(props) {
       <label>Select Markers you want: </label>
       <div className="available-marker-container">
         {props.markers.map((marker) => (
-            <div className="marker-item">
-              <input
-                type="checkbox"
-                checked={selectedMarkerIds.includes(marker.id)}
-                onChange={() => handleMarkerToggle(marker.id)}
-                className="marker-item-input"
-              />
-              <img
-                className="marker-item-icon"
-                src={`${require(`../../Icons/${marker.icon}.png`)}`}
-              />
-              <div className="marker-item-name">{marker.name}</div>
-            </div>
+          <div className="marker-item">
+            <input
+              type="checkbox"
+              checked={selectedMarkerIds.includes(marker.id)}
+              onChange={() => handleMarkerToggle(marker.id)}
+              className="marker-item-input"
+            />
+            <img
+              className="marker-item-icon"
+              src={`${require(`../../Icons/${marker.icon}.png`)}`}
+            />
+            <div className="marker-item-name">{marker.name}</div>
+          </div>
         ))}
       </div>
 

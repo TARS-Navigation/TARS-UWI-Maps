@@ -197,12 +197,6 @@ function App() {
 
     const visibleMarkerIds = new Set();
 
-    console.log(" Active Filters:", activeFilters);
-
-    console.log(" Custom Filter Map:", customFilterMap);
-
-    console.log(" All Markers:", markers);
-
     // Loop through all markers
     markers.forEach((marker) => {
       // If this marker has a category that is toggled on
@@ -218,7 +212,6 @@ function App() {
       });
     });
 
-    console.log(" Filtered Marker IDs:", [...visibleMarkerIds]);
 
     // Final filtered markers
     setFilteredMarkers(markers.filter((m) => visibleMarkerIds.has(m.id)));

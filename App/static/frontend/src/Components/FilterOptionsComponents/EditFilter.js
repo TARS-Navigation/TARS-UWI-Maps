@@ -80,7 +80,7 @@ export default function EditFilter(props) {
   };
 
   return (
-    <div className="edit-filter-container">
+    <div className="filter-form">
       <h3>Filters Which Can Be Editted</h3>
       <div className="filter-list">
         {props.filters &&
@@ -96,6 +96,7 @@ export default function EditFilter(props) {
             </div>
           )))}
       </div>
+      <p>These are all the available filters which you may edit</p>
       {selectedFilter !== null ? (
         <>
           <div className="selected-filter-name-container">
@@ -112,7 +113,9 @@ export default function EditFilter(props) {
               />
             </form>
           </div>
+          <p>You may change the filters name in the field here!</p>
           <div>Markers in Filter:</div>
+          <p>These are the markers that are currently assigned to this filter. Remove a marker by clicking the X next to the appropriate marker!</p>
           <div className="marker-list">
             {filterMarkers &&
               filterMarkers.map((marker) => (
@@ -135,6 +138,7 @@ export default function EditFilter(props) {
               ))}
           </div>
           <div>Markers Available</div>
+          <p>Want to add more markers to this filter? Choose from the list below and add any you wish with the add button! </p>
           <div className="available-marker-container">
             {props.markers &&
               props.markers.map((marker) => (

@@ -1,5 +1,51 @@
-.filter-list-2{
+
+/* --- Container for the toggle filters --- */
+.filter-list-2 {
     display: flex;
     flex-direction: column;
+    gap: 0.75rem;
+    max-height: 90vh; /* Limit vertical space */
     overflow-y: auto;
-}
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    width: 100%;
+    padding: 1.5rem;
+    border-radius: 20px;
+    background-color: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(6px);
+    transition: background-color 0.3s ease, color 0.3s ease;
+    box-sizing: border-box; /* Important! */
+  }
+  
+  /* --- Individual filter item --- */
+  .filter-item {
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.15);
+    font-size: 1.1rem;
+    color: #e6f1f1;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .filter-item:hover {
+    background-color: rgba(255, 255, 255, 0.25);
+  }
+  
+  /* --- Checkbox styling --- */
+  .filter-icon-input {
+    transform: scale(1.2);
+    accent-color: #5aad9f;
+  }
+  
+  /* --- Text beside checkbox --- */
+  .filter-item-name {
+    font-weight: 500;
+  }
+  
